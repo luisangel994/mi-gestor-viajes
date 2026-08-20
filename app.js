@@ -205,6 +205,53 @@ function resetToDefaultData() {
 
 function saveLocalData() {
     localStorage.setItem('travel_planner_data_v10', JSON.stringify(state.trips));
+    showSaveToast();
+}
+
+function showSaveToast() {
+    const badge = document.getElementById('save-status-badge');
+    if (badge) {
+        badge.classList.remove('hidden');
+        setTimeout(() => {
+            badge.classList.add('hidden');
+        }, 2500);
+    }
+}
+
+function triggerImportJSON() {
+    document.getElementById('import-json-file').click();
+}
+
+function handleImportJSONFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        try {
+            const importedData = JSON.parse(e.target.result);
+            if (Array.isArray(importedData)) {
+                state.trips = importedData;
+            } else if (importedData.id && importedData.title) {
+                const idx = state.trips.findIndex(t => t.id === importedData.id);
+                if (idx >= 0) {
+                    state.trips[idx] = importedData;
+                } else {
+                    state.trips.push(importedData);
+                }
+            }
+            saveLocalData();
+            alert("¡Copia de seguridad importada y guardada con éxito!");
+            if (state.currentTrip) {
+                loadTripDetail(state.currentTrip.id);
+            } else {
+                renderTrips();
+            }
+        } catch (err) {
+            alert("El archivo seleccionado no tiene un formato válido de copia de seguridad JSON.");
+        }
+    };
+    reader.readAsText(file);
 }
 
 function formatDate(dateStr) {
@@ -389,7 +436,6 @@ function renderTripRouteMap() {
     }
     mapBox.classList.remove('hidden');
 
-    // Link para abrir la ruta en la app de Google Maps
     let fullGmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(state.currentTrip.destination)}`;
     if (googleMapPoints.length > 1) {
         const startLoc = googleMapPoints[0];
@@ -402,7 +448,6 @@ function renderTripRouteMap() {
     }
     document.getElementById('btn-open-full-google-maps').href = fullGmapsUrl;
 
-    // Renderizar Mapa Interactivo Único (Leaflet)
     if (leafletMap) {
         leafletMap.remove();
         leafletMap = null;
@@ -974,7 +1019,7 @@ function exportTripJSON() {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state.currentTrip, null, 2));
     const a = document.createElement('a');
     a.href = dataStr;
-    a.download = `viaje_${state.currentTrip.title.replace(/\s+/g, '_')}_backup.json`;
+    a.download = `backup_viaje_${state.currentTrip.title.replace(/\s+/g, '_')}.json`;
     a.click();
 }
 

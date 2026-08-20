@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    <link rel="stylesheet" href="styles.css?v=2.0">
+    <link rel="stylesheet" href="styles.css?v=2.5">
 </head>
 <body class="bg-slate-50 text-slate-800 font-['Inter',sans-serif] antialiased min-h-screen flex flex-col">
 
@@ -49,22 +49,32 @@
                     </div>
                     <div>
                         <h1 class="font-bold text-lg text-slate-900 leading-tight">TravelPlanner</h1>
-                        <p class="text-xs text-slate-500 font-medium">Itinerarios y Control de Viajes</p>
+                        <p class="text-xs text-slate-500 font-medium flex items-center gap-1">
+                            <span>Itinerarios y Control de Viajes</span>
+                            <span id="save-status-badge" class="hidden text-[10px] font-bold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded ml-1 animate-pulse">✓ Guardado</span>
+                        </p>
                     </div>
                 </div>
 
+                <!-- Hidden file input for JSON import -->
+                <input type="file" id="import-json-file" accept=".json" onchange="handleImportJSONFile(event)" class="hidden">
+
                 <!-- Right Actions -->
-                <div class="flex items-center gap-3">
-                    <button onclick="showDashboard()" id="btn-nav-dashboard" class="px-3.5 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex items-center gap-1.5">
-                        <i class="ri-compass-3-line text-lg"></i>
+                <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+                    <button onclick="showDashboard()" id="btn-nav-dashboard" class="px-3 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex items-center gap-1">
+                        <i class="ri-compass-3-line text-base"></i>
                         <span>Mis Viajes</span>
                     </button>
-                    <button onclick="resetToDefaultData()" class="px-3 py-2 text-xs font-semibold text-amber-800 bg-amber-50 hover:bg-amber-100 border border-amber-200/80 rounded-lg transition-all flex items-center gap-1" title="Cargar imágenes y datos originales de la guía">
-                        <i class="ri-refresh-line"></i>
-                        <span>Restablecer Datos</span>
+                    <button onclick="triggerImportJSON()" class="px-3 py-2 text-xs font-semibold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200/80 rounded-lg transition-all flex items-center gap-1" title="Cargar copia de seguridad guardada en JSON">
+                        <i class="ri-upload-2-line text-base"></i>
+                        <span>Importar Copia</span>
                     </button>
-                    <button onclick="openNewTripModal()" class="px-4 py-2 text-sm font-semibold text-white bg-sky-600 hover:bg-sky-700 active:bg-sky-800 rounded-lg shadow-sm transition-all flex items-center gap-2">
-                        <i class="ri-add-line text-lg"></i>
+                    <button onclick="resetToDefaultData()" class="px-2.5 py-2 text-xs font-semibold text-amber-800 bg-amber-50 hover:bg-amber-100 border border-amber-200/80 rounded-lg transition-all flex items-center gap-1" title="Cargar datos originales de la guía">
+                        <i class="ri-refresh-line"></i>
+                        <span>Restablecer</span>
+                    </button>
+                    <button onclick="openNewTripModal()" class="px-3.5 py-2 text-xs font-semibold text-white bg-sky-600 hover:bg-sky-700 active:bg-sky-800 rounded-lg shadow-sm transition-all flex items-center gap-1.5">
+                        <i class="ri-add-line text-base"></i>
                         <span>Nuevo Viaje</span>
                     </button>
                 </div>
@@ -146,17 +156,17 @@
 
                     <!-- Navigation Action Buttons -->
                     <div class="flex items-center gap-2 flex-wrap self-start md:self-auto print:hidden">
-                        <button onclick="openNewActivityModal()" class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white font-semibold text-sm rounded-lg shadow-sm transition-all flex items-center gap-1.5">
+                        <button onclick="openNewActivityModal()" class="px-3.5 py-2 bg-sky-600 hover:bg-sky-700 text-white font-semibold text-xs rounded-lg shadow-sm transition-all flex items-center gap-1.5">
                             <i class="ri-add-circle-line text-base"></i> + Actividad
                         </button>
-                        <button onclick="exportOfflineHTML()" class="px-3.5 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold text-sm rounded-lg transition-all flex items-center gap-1.5" title="Descargar ficha HTML para ver en el móvil sin necesidad de internet">
+                        <button onclick="exportTripJSON()" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-lg shadow-sm transition-all flex items-center gap-1.5" title="Guardar una copia de seguridad en un archivo para no perder ningún cambio">
+                            <i class="ri-save-line text-base"></i> Guardar Copia (Backup)
+                        </button>
+                        <button onclick="exportOfflineHTML()" class="px-3 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold text-xs rounded-lg transition-all flex items-center gap-1.5" title="Descargar ficha HTML para ver en el móvil sin necesidad de internet">
                             <i class="ri-smartphone-line text-base"></i> Copia Offline Móvil
                         </button>
-                        <button onclick="printTripItinerary()" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-lg transition-all flex items-center gap-1.5">
+                        <button onclick="printTripItinerary()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-lg transition-all flex items-center gap-1.5">
                             <i class="ri-printer-line text-base"></i> Imprimir / PDF
-                        </button>
-                        <button onclick="exportTripJSON()" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-lg transition-all flex items-center gap-1.5" title="Exportar copia de seguridad en JSON">
-                            <i class="ri-download-2-line text-base"></i> Exportar
                         </button>
                         <button onclick="editCurrentTrip()" class="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-all" title="Editar viaje">
                             <i class="ri-edit-line text-lg"></i>
@@ -300,8 +310,12 @@
 
     <!-- Footer -->
     <footer class="bg-white border-t border-slate-200 py-6 mt-12 print:hidden">
-        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-400">
-            TravelPlanner &copy; 2026 - Gestor Personal de Itinerarios de Viajes (GitHub Pages App)
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
+            <div>TravelPlanner &copy; 2026 - Gestor Personal de Itinerarios de Viajes (GitHub Pages App)</div>
+            <div class="flex items-center gap-3">
+                <span class="text-slate-500 font-medium flex items-center gap-1"><i class="ri-save-line text-emerald-600"></i> Guardado automático en navegador activo</span>
+                <button onclick="exportTripJSON()" class="text-sky-600 font-bold hover:underline">📤 Guardar Copia Backup</button>
+            </div>
         </div>
     </footer>
 
@@ -516,6 +530,6 @@
     </div>
 
     <!-- App Script con versionado de caché -->
-    <script src="app.js?v=2.0"></script>
+    <script src="app.js?v=2.5"></script>
 </body>
 </html>
