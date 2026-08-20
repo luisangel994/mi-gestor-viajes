@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    <link rel="stylesheet" href="styles.css?v=1.2">
+    <link rel="stylesheet" href="styles.css?v=1.5">
 </head>
 <body class="bg-slate-50 text-slate-800 font-['Inter',sans-serif] antialiased min-h-screen flex flex-col">
 
@@ -184,35 +184,24 @@
             <!-- TAB 1: ITINERARIO POR DÍAS -->
             <div id="tab-content-itinerary" class="space-y-6">
 
-                <!-- CUADRO DE GOOGLE MAPS CON LA RUTA COMPLETA DE INICIO A FIN -->
+                <!-- CUADRO DE MAPA INTERACTIVO DE LA RUTA -->
                 <div id="trip-map-box" class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
                         <div>
                             <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
-                                <i class="ri-map-pin-range-line text-sky-600 text-xl"></i> Mapa de Ruta de Inicio a Fin
+                                <i class="ri-map-pin-range-line text-sky-600 text-xl"></i> Mapa Interactivo de la Ruta
                             </h3>
-                            <p class="text-xs text-slate-500">Visualiza la ruta completa del viaje y navega punto a punto con Google Maps.</p>
+                            <p class="text-xs text-slate-500">Haz clic en los marcadores para ver los detalles de cada día.</p>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <button onclick="toggleMapType('gmaps')" id="btn-map-type-gmaps" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-sky-600 text-white shadow-2xs">
-                                🗺️ Google Maps
-                            </button>
-                            <button onclick="toggleMapType('leaflet')" id="btn-map-type-leaflet" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200">
-                                📍 Interactivo
-                            </button>
+                        <div>
                             <a id="btn-open-full-google-maps" href="#" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-sm transition-all flex items-center gap-1 print:hidden" title="Navegar la ruta en la app de Google Maps">
-                                <i class="ri-navigation-fill"></i> Abrir GPS
+                                <i class="ri-navigation-fill"></i> Abrir en Google Maps
                             </a>
                         </div>
                     </div>
 
-                    <!-- Frame 1: Google Maps Embed -->
-                    <div id="gmaps-frame-wrapper" class="w-full rounded-xl overflow-hidden border border-slate-200 bg-slate-100" style="height: 380px;">
-                        <iframe id="gmaps-iframe" src="about:blank" width="100%" height="380" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
-
-                    <!-- Frame 2: Leaflet Interactive Route Map -->
-                    <div id="leaflet-frame-wrapper" class="hidden w-full rounded-xl overflow-hidden border border-slate-200" style="height: 380px;">
+                    <!-- Single Interactive Leaflet Route Map -->
+                    <div class="w-full rounded-xl overflow-hidden border border-slate-200 bg-slate-50" style="height: 380px;">
                         <div id="route-map" style="width: 100%; height: 380px;"></div>
                     </div>
                 </div>
@@ -527,6 +516,6 @@
     </div>
 
     <!-- App Script con versionado de caché -->
-    <script src="app.js?v=1.4"></script>
+    <script src="app.js?v=1.5"></script>
 </body>
 </html>

@@ -154,8 +154,7 @@ let state = {
     currentTrip: null,
     activeTripFilter: 'all',
     activeCategoryFilter: 'all',
-    activeTab: 'itinerary',
-    mapMode: 'gmaps'
+    activeTab: 'itinerary'
 };
 
 let leafletMap = null;
@@ -184,11 +183,7 @@ function loadLocalData() {
             saveLocalData();
         }
     } else {
-        // Clear any old legacy keys
-        localStorage.removeItem('travel_planner_data');
-        localStorage.removeItem('travel_planner_data_v3');
-        localStorage.removeItem('travel_planner_data_v4');
-        localStorage.removeItem('travel_planner_data_v5');
+        localStorage.clear();
         state.trips = DEFAULT_TRIPS;
         saveLocalData();
     }
@@ -196,7 +191,7 @@ function loadLocalData() {
 }
 
 function resetToDefaultData() {
-    if (confirm("¿Restablecer el itinerario de Galicia con las imágenes y datos originales de la guía?")) {
+    if (confirm("¿Restablecer los datos e itinerario original de Galicia?")) {
         localStorage.clear();
         state.trips = DEFAULT_TRIPS;
         saveLocalData();
@@ -353,36 +348,19 @@ function renderTripDetail() {
     renderChecklist();
 }
 
-function toggleMapType(type) {
-    state.mapMode = type;
-    const gmapsWrapper = document.getElementById('gmaps-frame-wrapper');
-    const leafletWrapper = document.getElementById('leaflet-frame-wrapper');
-    const btnGmaps = document.getElementById('btn-map-type-gmaps');
-    const btnLeaflet = document.getElementById('btn-map-type-leaflet');
-
-    if (type === 'gmaps') {
-        gmapsWrapper.classList.remove('hidden');
-        leafletWrapper.classList.add('hidden');
-        btnGmaps.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-sky-600 text-white shadow-2xs";
-        btnLeaflet.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200";
-    } else {
-        gmapsWrapper.classList.add('hidden');
-        leafletWrapper.classList.remove('hidden');
-        btnLeaflet.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-sky-600 text-white shadow-2xs";
-        btnGmaps.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200";
-        
-        initLeafletMap();
-    }
-}
-
-function initLeafletMap() {
+function renderTripRouteMap() {
     if (!state.currentTrip) return;
 
+    const mapBox = document.getElementById('trip-map-box');
+    const googleMapPoints = [];
     const waypoints = [];
+
     if (state.currentTrip.days) {
         state.currentTrip.days.forEach(d => {
             d.activities.forEach(a => {
                 if (a.location) {
+                    googleMapPoints.push(a.location);
+
                     let coords = null;
                     for (const [key, c] of Object.entries(COORDS_MAP)) {
                         if (a.location.toLowerCase().includes(key.toLowerCase()) || a.title.toLowerCase().includes(key.toLowerCase())) {
@@ -390,6 +368,7 @@ function initLeafletMap() {
                             break;
                         }
                     }
+
                     if (coords) {
                         waypoints.push({
                             day: d.day_number,
@@ -404,8 +383,26 @@ function initLeafletMap() {
         });
     }
 
-    if (waypoints.length === 0) return;
+    if (waypoints.length === 0) {
+        mapBox.classList.add('hidden');
+        return;
+    }
+    mapBox.classList.remove('hidden');
 
+    // Link para abrir la ruta en la app de Google Maps
+    let fullGmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(state.currentTrip.destination)}`;
+    if (googleMapPoints.length > 1) {
+        const startLoc = googleMapPoints[0];
+        const endLoc = googleMapPoints[googleMapPoints.length - 1];
+        const middleWaypoints = googleMapPoints.slice(1, -1).slice(0, 8);
+        fullGmapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(startLoc)}&destination=${encodeURIComponent(endLoc)}`;
+        if (middleWaypoints.length > 0) {
+            fullGmapsUrl += `&waypoints=${middleWaypoints.map(w => encodeURIComponent(w)).join('|')}`;
+        }
+    }
+    document.getElementById('btn-open-full-google-maps').href = fullGmapsUrl;
+
+    // Renderizar Mapa Interactivo Único (Leaflet)
     if (leafletMap) {
         leafletMap.remove();
         leafletMap = null;
@@ -446,42 +443,6 @@ function initLeafletMap() {
     }, 150);
 }
 
-function renderTripRouteMap() {
-    if (!state.currentTrip) return;
-
-    const mapBox = document.getElementById('trip-map-box');
-    const gmapsIframe = document.getElementById('gmaps-iframe');
-    const googleMapPoints = [];
-
-    if (state.currentTrip.days) {
-        state.currentTrip.days.forEach(d => {
-            d.activities.forEach(a => {
-                if (a.location) {
-                    googleMapPoints.push(a.location);
-                }
-            });
-        });
-    }
-
-    mapBox.classList.remove('hidden');
-
-    const mapQuery = googleMapPoints.length > 0 ? googleMapPoints.slice(0, 6).join(' to ') : state.currentTrip.destination;
-    const embedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&t=&z=8&ie=UTF8&iwloc=&output=embed`;
-    gmapsIframe.src = embedUrl;
-
-    let fullGmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(state.currentTrip.destination)}`;
-    if (googleMapPoints.length > 1) {
-        const startLoc = googleMapPoints[0];
-        const endLoc = googleMapPoints[googleMapPoints.length - 1];
-        const middleWaypoints = googleMapPoints.slice(1, -1).slice(0, 8);
-        fullGmapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(startLoc)}&destination=${encodeURIComponent(endLoc)}`;
-        if (middleWaypoints.length > 0) {
-            fullGmapsUrl += `&waypoints=${middleWaypoints.map(w => encodeURIComponent(w)).join('|')}`;
-        }
-    }
-    document.getElementById('btn-open-full-google-maps').href = fullGmapsUrl;
-}
-
 function switchTripTab(tabName) {
     state.activeTab = tabName;
     ['itinerary', 'budget', 'checklist'].forEach(t => {
@@ -495,6 +456,10 @@ function switchTripTab(tabName) {
             content.classList.add('hidden');
         }
     });
+
+    if (tabName === 'itinerary' && leafletMap) {
+        setTimeout(() => leafletMap.invalidateSize(), 150);
+    }
 }
 
 function renderDaysItinerary() {
