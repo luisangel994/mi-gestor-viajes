@@ -399,11 +399,8 @@ function renderTripRouteMap() {
     mapBox.classList.remove('hidden');
 
     // 1. Google Maps Embed iFrame (Nativo de Google Maps)
-    const startLoc = googleMapPoints[0];
-    const endLoc = googleMapPoints[googleMapPoints.length - 1];
-
-    // Google Maps Embed Directions iFrame
-    const embedUrl = `https://maps.google.com/maps?saddr=${encodeURIComponent(startLoc)}&daddr=${encodeURIComponent(endLoc)}&output=embed`;
+    const queryLocations = googleMapPoints.slice(0, 5).join(', ');
+    const embedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(queryLocations || state.currentTrip.destination)}&t=&z=8&ie=UTF8&iwloc=&output=embed`;
     gmapsIframe.src = embedUrl;
 
     // Full Navigation Link for App
