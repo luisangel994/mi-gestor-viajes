@@ -19,8 +19,8 @@ const DEFAULT_TRIPS = [
                 title: "Llegada a Ourense y Gastronomía",
                 activities: [
                     { id: 1001, time: "08:00", end_time: "", title: "Viaje Valencia -> Ourense", category: "Transporte", location: "Ourense, Galicia", map_url: "https://maps.google.com/?q=Ourense", image_url: "", cost: 0, confirmation_code: "", notes: "Salimos pronto de Valencia a Ourense (8 horas aprox.).", status: "Completado" },
-                    { id: 1002, time: "14:00", end_time: "", title: "Comida en ruta (Restaurante Alto de León)", category: "Restaurante", location: "Alto de León, Guadarrama", map_url: "https://maps.google.com/?q=Restaurante+Alto+de+Leon", image_url: "", cost: 40, confirmation_code: "", notes: "Comer pasando Madrid. Tiene buenas vistas y pilla de camino. Al ser fin de semana no hay menú del día.", status: "Completado" },
-                    { id: 1003, time: "21:30", end_time: "", title: "Cena en Ourense (A casa Do Pulpo / Cimadevila)", category: "Restaurante", location: "Cimadevila, Ourense", map_url: "https://maps.google.com/?q=Cimadevila+Ourense", image_url: "", cost: 35, confirmation_code: "", notes: "A casa Do Pulpo: rollitos de pulpo, a 15 min andando del apartamento. Reservar por ser sábado.", status: "Completado" },
+                    { id: 1002, time: "14:00", end_time: "", title: "Comida en ruta (Restaurante Alto de León)", category: "Restaurante", location: "Alto de León, Guadarrama", map_url: "https://maps.google.com/?q=Restaurante+Alto+de+Leon", image_url: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1000&auto=format&fit=crop", cost: 40, confirmation_code: "", notes: "Comer pasando Madrid. Tiene buenas vistas y pilla de camino. Al ser fin de semana no hay menú del día.", status: "Completado" },
+                    { id: 1003, time: "21:30", end_time: "", title: "Cena en Ourense (A casa Do Pulpo / Cimadevila)", category: "Restaurante", location: "Cimadevila, Ourense", map_url: "https://maps.google.com/?q=Cimadevila+Ourense", image_url: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=1000&auto=format&fit=crop", cost: 35, confirmation_code: "", notes: "A casa Do Pulpo: rollitos de pulpo, a 15 min andando del apartamento. Reservar por ser sábado.", status: "Completado" },
                     { id: 1004, time: "22:30", end_time: "", title: "Alojamiento en Casa Ourense", category: "Hotel", location: "Ourense", map_url: "https://goo.gl/maps/n1vFZUEciSHCdXc67", image_url: "", cost: 70, confirmation_code: "RES-OUR1", notes: "Ubicación del apartamento en Ourense.", status: "Completado" }
                 ]
             },
@@ -30,9 +30,9 @@ const DEFAULT_TRIPS = [
                 date: "2023-08-20",
                 title: "Ribeira Sacra y Termas de Ourense",
                 activities: [
-                    { id: 1005, time: "10:00", end_time: "", title: "Miradores de la Ribeira Sacra", category: "Actividad", location: "Ribeira Sacra, Ourense", map_url: "https://maps.google.com/?q=Mirador+de+Vilouxe", image_url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop", cost: 0, confirmation_code: "", notes: "• Mirador de Vilouxe: aparcar en Cimadevila frente a la capilla y seguir flechas (ruta 15-20 min).\n• Miradouro da Columna: junto a la carretera.\n• Miradoiro de Cabezoá: con pasarela de madera.\n• Balcón de Madrid (con parking).\n• Mirador A Mirada Máxica (parking en Camping Cañón do Sil).", status: "Completado" },
+                    { id: 1005, time: "10:00", end_time: "", title: "Miradores de la Ribeira Sacra", category: "Actividad", location: "Ribeira Sacra, Ourense", map_url: "https://maps.google.com/?q=Mirador+de+Vilouxe", image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Ca%C3%B1%C3%B3n_del_Sil_Ribeira_Sacra.jpg/1200px-Ca%C3%B1%C3%B3n_del_Sil_Ribeira_Sacra.jpg", cost: 0, confirmation_code: "", notes: "• Mirador de Vilouxe: aparcar en Cimadevila frente a la capilla y seguir flechas (ruta 15-20 min).\n• Miradouro da Columna: junto a la carretera.\n• Miradoiro de Cabezoá: con pasarela de madera.\n• Balcón de Madrid (con parking).\n• Mirador A Mirada Máxica (parking en Camping Cañón do Sil).", status: "Completado" },
                     { id: 1006, time: "14:00", end_time: "", title: "Comida en la Ribeira Sacra", category: "Restaurante", location: "Ribeira Sacra", map_url: "https://goo.gl/maps/aKVNYtjZWZGZmkpM6", image_url: "", cost: 25, confirmation_code: "", notes: "Llevarnos comida del Mercadona o comer en restaurante cerca (reservar por ser domingo). Área con mesas y vacas.", status: "Completado" },
-                    { id: 1007, time: "17:30", end_time: "", title: "Termas de Ourense (Outariz e Canedo)", category: "Actividad", location: "Termas Outariz, Ourense", map_url: "https://maps.google.com/?q=Termas+Outariz+Ourense", image_url: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&auto=format&fit=crop", cost: 6.4, confirmation_code: "", notes: "¡Llevar chanclas, toalla y bañador!\n• Outariz e Canedo: gratuitas, max 90min (cierra a las 20:00).\n• Termas Outariz: 6,40€, vestuarios limpios (cierra a las 23:00).", status: "Completado" },
+                    { id: 1007, time: "17:30", end_time: "", title: "Termas de Ourense (Outariz e Canedo)", category: "Actividad", location: "Termas Outariz, Ourense", map_url: "https://maps.google.com/?q=Termas+Outariz+Ourense", image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Termas_de_Outariz%2C_Ourense.jpg/1200px-Termas_de_Outariz%2C_Ourense.jpg", cost: 6.4, confirmation_code: "", notes: "¡Llevar chanclas, toalla y bañador!\n• Outariz e Canedo: gratuitas, max 90min (cierra a las 20:00).\n• Termas Outariz: 6,40€, vestuarios limpios (cierra a las 23:00).", status: "Completado" },
                     { id: 1008, time: "21:30", end_time: "", title: "Cena por zona A casa Do Pulpo", category: "Restaurante", location: "Ourense", map_url: "https://maps.google.com/?q=A+casa+Do+Pulpo+Ourense", image_url: "", cost: 30, confirmation_code: "", notes: "Cenar por el centro de Ourense.", status: "Completado" }
                 ]
             },
@@ -43,9 +43,9 @@ const DEFAULT_TRIPS = [
                 title: "Excursión a las Islas Cíes y Vigo",
                 activities: [
                     { id: 1009, time: "09:00", end_time: "", title: "Trayecto Ourense -> Vigo", category: "Transporte", location: "Vigo, Galicia", map_url: "https://maps.google.com/?q=Puerto+de+Vigo", image_url: "", cost: 0, confirmation_code: "", notes: "Salimos pronto de Ourense a Vigo (1h aprox.). Ir 15-20 min antes de que salga el barco para aparcar.", status: "Completado" },
-                    { id: 1010, time: "11:00", end_time: "17:30", title: "Excursión a las Islas Cíes", category: "Actividad", location: "Islas Cíes, Vigo", map_url: "https://maps.google.com/?q=Islas+Cies", image_url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop", cost: 50, confirmation_code: "CIES-2023", notes: "Salida 11:00, vuelta 17:30. Pedir permiso de la Xunta de Galicia + billete de barco.\nQué ver:\n• Playa de Rodas (mejor playa del mundo)\n• Playa dos Viños y Playa de Nuestra Señora\n• Ruta Alto do Príncipe (1h 15min)\n• Ruta de Monteagudo (1h 45min al faro)", status: "Completado" },
+                    { id: 1010, time: "11:00", end_time: "17:30", title: "Excursión a las Islas Cíes", category: "Actividad", location: "Islas Cíes, Vigo", map_url: "https://maps.google.com/?q=Islas+Cies", image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Playa_de_Rodas_-_Islas_C%C3%ADes.jpg/1200px-Playa_de_Rodas_-_Islas_C%C3%ADes.jpg", cost: 50, confirmation_code: "CIES-2023", notes: "Salida 11:00, vuelta 17:30. Pedir permiso de la Xunta de Galicia + billete de barco.\nQué ver:\n• Playa de Rodas (mejor playa del mundo)\n• Playa dos Viños y Playa de Nuestra Señora\n• Ruta Alto do Príncipe (1h 15min)\n• Ruta de Monteagudo (1h 45min al faro)", status: "Completado" },
                     { id: 1011, time: "14:00", end_time: "", title: "Comida de picnic en Islas Cíes", category: "Restaurante", location: "Islas Cíes", map_url: "", image_url: "", cost: 10, confirmation_code: "", notes: "Llevar bocata (los restaurantes de la isla son escasos y caros).", status: "Completado" },
-                    { id: 1012, time: "18:00", end_time: "", title: "Visita Tarde: A Guarda y Baiona (Opcional)", category: "Actividad", location: "Baiona, Galicia", map_url: "https://maps.google.com/?q=Baiona", image_url: "", cost: 0, confirmation_code: "", notes: "A 30 min en coche de Vigo.", status: "Completado" },
+                    { id: 1012, time: "18:00", end_time: "", title: "Visita Tarde: A Guarda y Baiona (Opcional)", category: "Actividad", location: "Baiona, Galicia", map_url: "https://maps.google.com/?q=Baiona", image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Baiona_Pontevedra_Spain.jpg/1200px-Baiona_Pontevedra_Spain.jpg", cost: 0, confirmation_code: "", notes: "A 30 min en coche de Vigo.", status: "Completado" },
                     { id: 1013, time: "21:30", end_time: "", title: "Cena: El Super Cachopo", category: "Restaurante", location: "Vigo", map_url: "https://maps.google.com/?q=El+super+cachopo+Vigo", image_url: "", cost: 35, confirmation_code: "", notes: "Cena abundante de cachopo en Vigo.", status: "Completado" },
                     { id: 1014, time: "22:30", end_time: "", title: "Alojamiento en Casa Vigo", category: "Hotel", location: "Vigo", map_url: "https://maps.google.com/?q=Vigo", image_url: "", cost: 65, confirmation_code: "RES-VIGO", notes: "Alojamiento en Vigo.", status: "Completado" }
                 ]
@@ -57,8 +57,8 @@ const DEFAULT_TRIPS = [
                 title: "Santiago de Compostela y Costa da Morte",
                 activities: [
                     { id: 1015, time: "09:00", end_time: "", title: "Trayecto Vigo -> Santiago", category: "Transporte", location: "Santiago de Compostela", map_url: "https://maps.google.com/?q=Santiago+de+Compostela", image_url: "", cost: 0, confirmation_code: "", notes: "Salimos pronto de Vigo a Santiago (1 hora aprox.).", status: "Completado" },
-                    { id: 1016, time: "10:30", end_time: "", title: "Visita Santiago de Compostela", category: "Actividad", location: "Santiago de Compostela", map_url: "https://maps.google.com/?q=Catedral+de+Santiago", image_url: "https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=800&auto=format&fit=crop", cost: 0, confirmation_code: "", notes: "Recorrido por la Catedral y el casco histórico.", status: "Completado" },
-                    { id: 1017, time: "16:00", end_time: "", title: "Finisterre y Costa da Morte", category: "Actividad", location: "Finisterre, Galicia", map_url: "https://maps.google.com/?q=Faro+de+Finisterre", image_url: "", cost: 0, confirmation_code: "", notes: "Visita al faro de Finisterre y costa de la zona.", status: "Completado" },
+                    { id: 1016, time: "10:30", end_time: "", title: "Visita Santiago de Compostela", category: "Actividad", location: "Santiago de Compostela", map_url: "https://maps.google.com/?q=Catedral+de+Santiago", image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Catedral_de_Santiago_de_Compostela_01.jpg/1200px-Catedral_de_Santiago_de_Compostela_01.jpg", cost: 0, confirmation_code: "", notes: "Recorrido por la Catedral y el casco histórico.", status: "Completado" },
+                    { id: 1017, time: "16:00", end_time: "", title: "Finisterre y Costa da Morte", category: "Actividad", location: "Finisterre, Galicia", map_url: "https://maps.google.com/?q=Faro+de+Finisterre", image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Faro_de_Fisterra.jpg/1200px-Faro_de_Fisterra.jpg", cost: 0, confirmation_code: "", notes: "Visita al faro de Finisterre y costa de la zona.", status: "Completado" },
                     { id: 1018, time: "22:00", end_time: "", title: "Visita Noche: Mar de Ardora (Playa de Muxía)", category: "Actividad", location: "Muxía, Galicia", map_url: "https://maps.google.com/?q=Playa+de+Muxia", image_url: "", cost: 0, confirmation_code: "", notes: "Observar el fenómeno de bioluminiscencia en la playa.", status: "Completado" },
                     { id: 1019, time: "23:30", end_time: "", title: "Alojamiento en Casa Santiago", category: "Hotel", location: "Santiago de Compostela", map_url: "https://maps.google.com/?q=Santiago+de+Compostela", image_url: "", cost: 70, confirmation_code: "RES-STG", notes: "Alojamiento en Santiago.", status: "Completado" }
                 ]
@@ -70,7 +70,7 @@ const DEFAULT_TRIPS = [
                 title: "Ruta hacia A Coruña y Torre de Hércules",
                 activities: [
                     { id: 1020, time: "09:30", end_time: "", title: "Trayecto bordeando la costa pasando por Muxía", category: "Transporte", location: "A Coruña", map_url: "https://maps.google.com/?q=Muxia", image_url: "", cost: 0, confirmation_code: "", notes: "Salimos hacia A Coruña bordeando la costa.", status: "Completado" },
-                    { id: 1021, time: "16:30", end_time: "", title: "Visita a la Torre de Hércules", category: "Actividad", location: "A Coruña", map_url: "https://maps.google.com/?q=Torre+de+Hercules", image_url: "https://images.unsplash.com/photo-1500835556837-99ac94a94552?w=800&auto=format&fit=crop", cost: 5, confirmation_code: "", notes: "Para aparcar está complicado, ir con tiempo.", status: "Completado" },
+                    { id: 1021, time: "16:30", end_time: "", title: "Visita a la Torre de Hércules", category: "Actividad", location: "A Coruña", map_url: "https://maps.google.com/?q=Torre+de+Hercules", image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Torre_de_H%C3%A9rcules_-_A_Coru%C3%B1a_01.jpg/1200px-Torre_de_H%C3%A9rcules_-_A_Coru%C3%B1a_01.jpg", cost: 5, confirmation_code: "", notes: "Para aparcar está complicado, ir con tiempo.", status: "Completado" },
                     { id: 1022, time: "22:00", end_time: "", title: "Alojamiento en Casa A Coruña", category: "Hotel", location: "A Coruña", map_url: "https://maps.google.com/?q=A+Coruna", image_url: "", cost: 75, confirmation_code: "RES-COR", notes: "Alojamiento en A Coruña.", status: "Completado" }
                 ]
             },
@@ -80,7 +80,7 @@ const DEFAULT_TRIPS = [
                 date: "2023-08-24",
                 title: "Fragas do Eume y Naturaleza",
                 activities: [
-                    { id: 1023, time: "09:30", end_time: "", title: "Ruta en las Fragas do Eume", category: "Actividad", location: "Fragas do Eume", map_url: "https://maps.google.com/?q=Aparcamiento+Fragas+do+Eume", image_url: "https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&auto=format&fit=crop", cost: 0, confirmation_code: "", notes: "Dejar el coche en Aparcamiento Fragas do Eume (ir pronto antes de que se llene, a 40 min de A Coruña). Desde el Centro de Interpretación se puede coger el bus.", status: "Completado" },
+                    { id: 1023, time: "09:30", end_time: "", title: "Ruta en las Fragas do Eume", category: "Actividad", location: "Fragas do Eume", map_url: "https://maps.google.com/?q=Aparcamiento+Fragas+do+Eume", image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Fragas_do_Eume_01.jpg/1200px-Fragas_do_Eume_01.jpg", cost: 0, confirmation_code: "", notes: "Dejar el coche en Aparcamiento Fragas do Eume (ir pronto antes de que se llene, a 40 min de A Coruña). Desde el Centro de Interpretación se puede coger el bus.", status: "Completado" },
                     { id: 1024, time: "21:00", end_time: "", title: "Alojamiento en Casa", category: "Hotel", location: "A Coruña", map_url: "", image_url: "", cost: 65, confirmation_code: "", notes: "Alojamiento.", status: "Completado" }
                 ]
             },
@@ -90,8 +90,8 @@ const DEFAULT_TRIPS = [
                 date: "2023-08-25",
                 title: "Playa de las Catedrales y Luarca/Taramundi",
                 activities: [
-                    { id: 1025, time: "10:00", end_time: "", title: "Playa de las Catedrales", category: "Actividad", location: "Playa de las Catedrales, Ribadeo", map_url: "https://maps.google.com/?q=Playa+de+las+Catedrales", image_url: "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&auto=format&fit=crop", cost: 0, confirmation_code: "PERMISO-CATEDRAIS", notes: "Mirar el tiempo y las mareas. Imprescindible sacar la Autorización Praia das Catedrais.", status: "Completado" },
-                    { id: 1026, time: "16:00", end_time: "", title: "Visita Luarca y Taramundi (Asturias)", category: "Actividad", location: "Luarca, Asturias", map_url: "https://maps.google.com/?q=Taramundi", image_url: "", cost: 15, confirmation_code: "", notes: "Comprar queso artesanal en Taramundi y realizar la Ruta del Agua.", status: "Completado" },
+                    { id: 1025, time: "10:00", end_time: "", title: "Playa de las Catedrales", category: "Actividad", location: "Playa de las Catedrales, Ribadeo", map_url: "https://maps.google.com/?q=Playa+de+las+Catedrales", image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Playa_de_las_Catedrales_01.jpg/1200px-Playa_de_las_Catedrales_01.jpg", cost: 0, confirmation_code: "PERMISO-CATEDRAIS", notes: "Mirar el tiempo y las mareas. Imprescindible sacar la Autorización Praia das Catedrais.", status: "Completado" },
+                    { id: 1026, time: "16:00", end_time: "", title: "Visita Luarca y Taramundi (Asturias)", category: "Actividad", location: "Luarca, Asturias", map_url: "https://maps.google.com/?q=Taramundi", image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Luarca_01.jpg/1200px-Luarca_01.jpg", cost: 15, confirmation_code: "", notes: "Comprar queso artesanal en Taramundi y realizar la Ruta del Agua.", status: "Completado" },
                     { id: 1027, time: "21:30", end_time: "", title: "Alojamiento", category: "Hotel", location: "Luarca, Asturias", map_url: "", image_url: "", cost: 60, confirmation_code: "", notes: "Alojamiento en zona Asturias.", status: "Completado" }
                 ]
             },
@@ -174,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function loadLocalData() {
-    const CURRENT_STORAGE_KEY = 'travel_planner_data_v4';
+    const CURRENT_STORAGE_KEY = 'travel_planner_data_v5';
     const data = localStorage.getItem(CURRENT_STORAGE_KEY);
     if (data) {
         try {
@@ -191,7 +191,7 @@ function loadLocalData() {
 }
 
 function saveLocalData() {
-    localStorage.setItem('travel_planner_data_v4', JSON.stringify(state.trips));
+    localStorage.setItem('travel_planner_data_v5', JSON.stringify(state.trips));
 }
 
 function formatDate(dateStr) {
@@ -353,7 +353,6 @@ function toggleMapType(type) {
         btnLeaflet.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-sky-600 text-white shadow-2xs";
         btnGmaps.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200";
         
-        // Inicializar Leaflet ahora que el div es visible
         initLeafletMap();
     }
 }
@@ -448,12 +447,10 @@ function renderTripRouteMap() {
 
     mapBox.classList.remove('hidden');
 
-    // 1. Google Maps Embed iFrame (Garantizado siempre activo)
     const mapQuery = googleMapPoints.length > 0 ? googleMapPoints.slice(0, 6).join(' to ') : state.currentTrip.destination;
     const embedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&t=&z=8&ie=UTF8&iwloc=&output=embed`;
     gmapsIframe.src = embedUrl;
 
-    // Full Navigation Link for App
     let fullGmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(state.currentTrip.destination)}`;
     if (googleMapPoints.length > 1) {
         const startLoc = googleMapPoints[0];
@@ -531,8 +528,8 @@ function renderDaysItinerary() {
                             </div>
 
                             ${a.image_url ? `
-                                <div class="rounded-xl overflow-hidden max-h-48 border border-slate-200 my-2">
-                                    <img src="${a.image_url}" alt="${a.title}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                                <div class="rounded-xl overflow-hidden border border-slate-200 my-3 bg-slate-900/5 flex items-center justify-center p-1">
+                                    <img src="${a.image_url}" alt="${a.title}" class="w-full h-auto max-h-96 object-contain rounded-lg hover:scale-[1.01] transition-transform">
                                 </div>
                             ` : ''}
 
@@ -1017,7 +1014,7 @@ function exportOfflineHTML() {
                         <span>${a.time ? a.time + ' ' : ''}${a.title}</span>
                         <span style="background:#e0f2fe; color:#0369a1; padding:2px 8px; border-radius:12px; font-size:11px;">${a.category}</span>
                     </div>
-                    ${a.image_url ? `<img src="${a.image_url}" style="width:100%; max-height:200px; object-fit:cover; border-radius:8px; margin:8px 0;">` : ''}
+                    ${a.image_url ? `<img src="${a.image_url}" style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin:8px 0;">` : ''}
                     ${a.location ? `<div style="font-size:12px; color:#475569; margin-top:4px;">📍 ${a.location} ${mapLink ? `<a href="${mapLink}" target="_blank" style="color:#0284c7; font-weight:bold; margin-left:6px;">[Navegar con Google Maps]</a>` : ''}</div>` : ''}
                     ${a.confirmation_code ? `<div style="font-size:12px; color:#4338ca; background:#e0e7ff; padding:2px 6px; border-radius:4px; display:inline-block; margin-top:4px;">🎫 Reserva: ${a.confirmation_code}</div>` : ''}
                     ${a.notes ? `<div style="font-size:12px; color:#64748b; font-style:italic; margin-top:4px; background:#fff; padding:6px; border-radius:6px; white-space:pre-line;">${a.notes}</div>` : ''}
@@ -1027,7 +1024,7 @@ function exportOfflineHTML() {
 
         return `
             <div style="background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:16px; margin-bottom:16px;">
-                <h3 style="margin:0 0 10px 0; font-size:16px; color:#0f172a; border-bottom:1px solid #f1f5f9; padding-bottom:6px;">
+                <h3 style="margin:0 0 10px 0; font-size:16px; color:#0f172a; border-bottom:1px solid #f1f5f9; pb-1.5">
                     Día ${d.day_number}: ${d.title || ''} <span style="font-size:12px; font-weight:normal; color:#64748b;">(${formatDate(d.date)})</span>
                 </h3>
                 ${acts}
