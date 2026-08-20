@@ -120,6 +120,195 @@ const DEFAULT_TRIPS = [
             { id: 3005, category: "Equipaje", item: "Calzado cómodo para caminatas y miradores", completed: 1 },
             { id: 3006, category: "Electrónica", item: "Cargadores y Powerbank", completed: 1 }
         ]
+    },
+    {
+        id: 2,
+        title: "Suiza en Tesla Model 3",
+        destination: "Tossa de Mar, La Camarga, Annecy, Ginebra, Zermatt, Lauterbrunnen, Liechtenstein",
+        start_date: "2026-08-24",
+        end_date: "2026-09-05",
+        cover_image: "🇨🇭",
+        budget: 1500.0,
+        currency: "EUR",
+        notes: "Ruta en Tesla Model 3 (4344MXC) por España, Francia, Suiza y Liechtenstein con modo Camp, Superchargers y duchas.",
+        days: [
+            {
+                id: 201,
+                day_number: 1,
+                date: "2026-08-24",
+                title: "Valencia -> Tossa de Mar",
+                activities: [
+                    { id: 2001, time: "08:00", end_time: "12:30", title: "Viaje Valencia -> Tossa de Mar (450km)", category: "Transporte", location: "Tossa de Mar, Girona", map_url: "https://maps.google.com/?q=Tossa+de+Mar", image_url: "", cost: 0, confirmation_code: "", notes: "Aprox. 4h 30m de conducción en el Tesla.", status: "Planificado" },
+                    { id: 2002, time: "10:30", end_time: "13:30", title: "Visita Vila Vella, Playa d'es Codolar y Far de Tossa", category: "Actividad", location: "Vila Vella, Tossa de Mar", map_url: "https://maps.google.com/?q=Vila+Vella+Tossa+de+Mar", image_url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1000&auto=format&fit=crop", cost: 0, confirmation_code: "", notes: "Recinto amurallado medieval, cala emblemática y faro de Tossa.", status: "Planificado" },
+                    { id: 1003, time: "14:00", end_time: "", title: "Comida del Mercadona", category: "Restaurante", location: "Tossa de Mar", map_url: "", image_url: "", cost: 15, confirmation_code: "", notes: "Comida de picnic en la costa.", status: "Planificado" },
+                    { id: 2004, time: "19:00", end_time: "", title: "Duchas en Estación Repsol", category: "Nota", location: "Estación Repsol Tossa de Mar", map_url: "https://maps.google.com/?q=Estacion+Repsol+Tossa+de+Mar", image_url: "", cost: 3, confirmation_code: "", notes: "Duchas disponibles por 3€.", status: "Planificado" },
+                    { id: 2005, time: "22:00", end_time: "", title: "Pernocta en Tesla Camp Mode (Tossa de Mar)", category: "Hotel", location: "Zona Deportiva de Tossa de Mar", map_url: "https://maps.google.com/?q=Zona+Deportiva+Tossa+de+Mar", image_url: "", cost: 0, confirmation_code: "", notes: "Pernoctar en la Zona Deportiva con colchón y climatización Tesla Camp Mode.", status: "Planificado" }
+                ]
+            },
+            {
+                id: 202,
+                day_number: 2,
+                date: "2026-08-25",
+                title: "Tossa de Mar -> La Camarga (Francia)",
+                activities: [
+                    { id: 2006, time: "08:30", end_time: "12:00", title: "Trayecto Tossa de Mar -> La Camarga (270km)", category: "Transporte", location: "La Camarga, Francia", map_url: "https://maps.google.com/?q=La+Camarga+Francia", image_url: "", cost: 0, confirmation_code: "", notes: "Cruce de frontera a Francia hacia el Parque Natural de la Camarga.", status: "Planificado" },
+                    { id: 2007, time: "10:00", end_time: "14:00", title: "Parque Natural de la Camarga y Pont de Gau", category: "Actividad", location: "Parque ornitologico de Pont de Gau", map_url: "https://maps.google.com/?q=Parque+ornitologico+de+Pont+de+Gau", image_url: "https://images.unsplash.com/photo-1544979590-37e9b47eb705?w=1000&auto=format&fit=crop", cost: 8, confirmation_code: "", notes: "Observación de flamencos rosas, caballos salvajes y marismas.", status: "Planificado" },
+                    { id: 2008, time: "14:30", end_time: "", title: "Compra en Lidl (Aigues-Mortes)", category: "Restaurante", location: "Aigues-Mortes, Francia", map_url: "https://maps.google.com/?q=Lidl+Aigues-Mortes", image_url: "", cost: 25, confirmation_code: "", notes: "Comprar suministros para comida y cena en Rue des Marchands 443.", status: "Planificado" },
+                    { id: 2009, time: "20:00", end_time: "", title: "Duchas en Gasolinera TotalEnergies", category: "Nota", location: "TotalEnergies Aigues-Mortes", map_url: "", image_url: "", cost: 3, confirmation_code: "", notes: "Aseo en ruta.", status: "Planificado" },
+                    { id: 2010, time: "22:00", end_time: "", title: "Pernocta en Parking Plage de Piémanson", category: "Hotel", location: "Parking Plage de Piemanson", map_url: "https://maps.google.com/?q=Parking+Plage+de+Piemanson", image_url: "", cost: 0, confirmation_code: "", notes: "Junto al Lidl.", status: "Planificado" }
+                ]
+            },
+            {
+                id: 203,
+                day_number: 3,
+                date: "2026-08-26",
+                title: "La Camarga -> Annecy (Venecia de los Alpes)",
+                activities: [
+                    { id: 2011, time: "08:00", end_time: "13:00", title: "Trayecto La Camarga -> Annecy (435km)", category: "Transporte", location: "Annecy, Francia", map_url: "https://maps.google.com/?q=Annecy+Francia", image_url: "", cost: 0, confirmation_code: "", notes: "Aprox 4h 45m de conducción.", status: "Planificado" },
+                    { id: 2012, time: "14:00", end_time: "19:00", title: "Visita al Casco Antiguo (Vieille Ville) y Lago de Annecy", category: "Actividad", location: "Vieille Ville, Annecy", map_url: "https://maps.google.com/?q=Vieille+Ville+Annecy", image_url: "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=1000&auto=format&fit=crop", cost: 0, confirmation_code: "", notes: "Recorrer los canales de la Venecia de los Alpes y las orillas del lago.", status: "Planificado" },
+                    { id: 2013, time: "16:00", end_time: "", title: "Degustar Macarons típicos en Annecy", category: "Restaurante", location: "Annecy", map_url: "", image_url: "", cost: 10, confirmation_code: "", notes: "Probar las delicias locales de pastelería.", status: "Planificado" },
+                    { id: 2014, time: "20:00", end_time: "", title: "Duchas en TotalEnergies - REL. DE LA RIPAILLE", category: "Nota", location: "TotalEnergies Relais de la Ripaille", map_url: "https://maps.google.com/?q=TotalEnergies+Relais+de+la+Ripaille", image_url: "", cost: 0, confirmation_code: "", notes: "Duchas gratuitas. Pedir la llave en la caja de la estación.", status: "Planificado" },
+                    { id: 2015, time: "22:00", end_time: "", title: "Pernocta en Parking Colmyr (Annecy)", category: "Hotel", location: "Parking Colmyr, Annecy", map_url: "https://maps.google.com/?q=Parking+Colmyr+Annecy", image_url: "", cost: 0, confirmation_code: "", notes: "⚠️ Normativa estricta contra pernocta fuera de campings. Ubicación urbana con baños cerca.", status: "Planificado" }
+                ]
+            },
+            {
+                id: 204,
+                day_number: 4,
+                date: "2026-08-27",
+                title: "Segundo día en Annecy",
+                activities: [
+                    { id: 2016, time: "10:00", end_time: "12:30", title: "Visita al Palacio de la Isla (Palais de l'Île)", category: "Actividad", location: "Palais de l'Ile, Annecy", map_url: "https://maps.google.com/?q=Palais+de+l+Ile+Annecy", image_url: "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=1000&auto=format&fit=crop", cost: 5, confirmation_code: "", notes: "El edificio medieval más icónico sobre el canal de Annecy.", status: "Planificado" },
+                    { id: 2017, time: "14:00", end_time: "18:00", title: "Paseo en bicicleta o barca por el Lago de Annecy", category: "Actividad", location: "Lago de Annecy", map_url: "https://maps.google.com/?q=Lago+de+Annecy", image_url: "", cost: 20, confirmation_code: "", notes: "Día de relax. Alquilar bici para el carril bici o pequeña embarcación.", status: "Planificado" },
+                    { id: 2018, time: "20:00", end_time: "", title: "Duchas en TotalEnergies - REL. DE LA RIPAILLE", category: "Nota", location: "TotalEnergies Relais de la Ripaille", map_url: "", image_url: "", cost: 0, confirmation_code: "", notes: "Gratuito (solicitar llave).", status: "Planificado" },
+                    { id: 2019, time: "22:00", end_time: "", title: "Pernocta en Parking Colmyr", category: "Hotel", location: "Parking Colmyr, Annecy", map_url: "", image_url: "", cost: 0, confirmation_code: "", notes: "Pernocta en Annecy.", status: "Planificado" }
+                ]
+            },
+            {
+                id: 205,
+                day_number: 5,
+                date: "2026-08-28",
+                title: "Annecy -> Ginebra -> Valle del Ródano (Entrada a Suiza)",
+                activities: [
+                    { id: 2020, time: "08:30", end_time: "11:30", title: "Trayecto Lago de Annecy a Ginebra y Valle del Ródano (220km)", category: "Transporte", location: "Ginebra, Suiza", map_url: "https://maps.google.com/?q=Ginebra+Suiza", image_url: "", cost: 0, confirmation_code: "", notes: "Entrada oficial a Suiza. Aprox. 3 horas de ruta.", status: "Planificado" },
+                    { id: 2021, time: "11:30", end_time: "14:30", title: "Visita a Ginebra (Jet d'Eau y Casco Antiguo)", category: "Actividad", location: "Jet d'Eau, Ginebra", map_url: "https://maps.google.com/?q=Jet+d+Eau+Ginebra", image_url: "https://images.unsplash.com/photo-1573108037344-93f538d7741d?w=1000&auto=format&fit=crop", cost: 0, confirmation_code: "", notes: "Iconico chorro de agua de 140 metros y paseo por el centro histórico.", status: "Planificado" },
+                    { id: 2022, time: "15:30", end_time: "18:30", title: "Viñedos de Lavaux (UNESCO) y Castillo de Chillon", category: "Actividad", location: "Castillo de Chillon, Montreux", map_url: "https://maps.google.com/?q=Castillo+de+Chillon", image_url: "https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?w=1000&auto=format&fit=crop", cost: 15, confirmation_code: "", notes: "Espectaculares viñedos en terrazas con vistas al Lago Lemán y fortaleza de Chillon.", status: "Planificado" },
+                    { id: 2023, time: "19:00", end_time: "", title: "Carga Tesla: Supercharger Martigny o Sion", category: "Transporte", location: "Supercharger Martigny", map_url: "https://maps.google.com/?q=Supercharger+Martigny", image_url: "", cost: 0, confirmation_code: "", notes: "Recarga rápida de batería Tesla.", status: "Planificado" },
+                    { id: 2024, time: "19:30", end_time: "", title: "Compra en Supermercados Migros / Denner (Sion)", category: "Restaurante", location: "Sion, Suiza", map_url: "", image_url: "", cost: 25, confirmation_code: "", notes: "Supermercados con opciones más económicas en Suiza.", status: "Planificado" },
+                    { id: 2025, time: "21:30", end_time: "", title: "Pernocta en Saint-Germain (Savièse) (10 CHF)", category: "Hotel", location: "63 Route de Binii, Saviese", map_url: "https://maps.app.goo.gl/dFTpdd1bxGGh2NpX6", image_url: "", cost: 10, confirmation_code: "", notes: "10 CHF / 24h. Duchas disponibles por 3 CHF.", status: "Planificado" }
+                ]
+            },
+            {
+                id: 206,
+                day_number: 6,
+                date: "2026-08-29",
+                title: "Glacier 3000 y el Cervino / Matterhorn (Zermatt)",
+                activities: [
+                    { id: 2026, time: "08:30", end_time: "11:00", title: "Glacier 3000 y Peak Walk by Tissot", category: "Actividad", location: "Col du Pillon, Glacier 3000", map_url: "https://maps.google.com/?q=Col+du+Pillon+Glacier+3000", image_url: "https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?w=1000&auto=format&fit=crop", cost: 80, confirmation_code: "", notes: "Subida en teleférico Col du Pillon -> Scex Rouge (comprar en glacier3000.ch). Cruzar el único puente colgante entre picos.", status: "Planificado" },
+                    { id: 2027, time: "12:00", end_time: "17:30", title: "Tren lanzadera Täsch -> Zermatt y Gornergrat", category: "Actividad", location: "Gornergrat, Zermatt", map_url: "https://maps.google.com/?q=Gornergrat+Zermatt", image_url: "https://images.unsplash.com/photo-1527668752968-14dc70a27c95?w=1000&auto=format&fit=crop", cost: 90, confirmation_code: "", notes: "Aparcar en Täsch, coger tren lanzadera de 15 min y subir al tren cremallera de Gornergrat para ver el Cervino.", status: "Planificado" },
+                    { id: 2028, time: "18:00", end_time: "", title: "Carga Tesla en Supercharger Visp", category: "Transporte", location: "Supercharger Visp", map_url: "https://maps.google.com/?q=Supercharger+Visp", image_url: "", cost: 0, confirmation_code: "", notes: "Recarga antes de subir a los puertos alpiños.", status: "Planificado" },
+                    { id: 2029, time: "20:00", end_time: "", title: "Pernocta en Obergoms - Furkastrasse (3 CHF)", category: "Hotel", location: "Furkastrasse, Obergoms", map_url: "https://maps.app.goo.gl/4B4iLytCR2VAe5AL7", image_url: "", cost: 3, confirmation_code: "", notes: "Pagar tasa turística de 3 CHF/persona por QR inmediatamente. 2 baños portátiles disponibles.", status: "Planificado" }
+                ]
+            },
+            {
+                id: 207,
+                day_number: 7,
+                date: "2026-08-30",
+                title: "Ruta de los 3 Puertos (Furka, Grimsel, Susten) y Lauterbrunnen",
+                activities: [
+                    { id: 2030, time: "09:00", end_time: "11:00", title: "Furkapass, Hotel Belvédère y Glaciar del Ródano", category: "Actividad", location: "Hotel Belvedere, Furkapass", map_url: "https://maps.google.com/?q=Hotel+Belvedere+Furkapass", image_url: "https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?w=1000&auto=format&fit=crop", cost: 0, confirmation_code: "", notes: "Mítica curva de la carretera alpina y mirador al glaciar.", status: "Planificado" },
+                    { id: 2031, time: "11:30", end_time: "13:00", title: "Grimselpass, Totensee y Embalse Grimselsee", category: "Actividad", location: "Grimselpass", map_url: "https://maps.google.com/?q=Grimselpass", image_url: "", cost: 0, confirmation_code: "", notes: "Puerto a 2.164 metros de altitud con vistas a cumbres de granito.", status: "Planificado" },
+                    { id: 2032, time: "14:00", end_time: "16:30", title: "Garganta del Río Aar (Aareschlucht) y Reichenbachfall", category: "Actividad", location: "Aareschlucht, Meiringen", map_url: "https://maps.google.com/?q=Aareschlucht+Meiringen", image_url: "", cost: 10, confirmation_code: "", notes: "Cañón de 1,4km sobre pasarelas y cascadas del desenlace de Sherlock Holmes.", status: "Planificado" },
+                    { id: 2033, time: "17:00", end_time: "19:00", title: "Cascadas de Giessbach, Iseltwald y Lauterbrunnen", category: "Actividad", location: "Lauterbrunnen", map_url: "https://maps.google.com/?q=Lauterbrunnen", image_url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1000&auto=format&fit=crop", cost: 0, confirmation_code: "", notes: "Pueblo en el lago de Brienz y el valle de las 72 cascadas (Cascada Staubbachfall de 300m).", status: "Planificado" },
+                    { id: 2034, time: "19:30", end_time: "", title: "Carga Tesla: Supercharger Interlaken / Dietikon", category: "Transporte", location: "Supercharger Interlaken", map_url: "", image_url: "", cost: 0, confirmation_code: "", notes: "Carga rápida Tesla.", status: "Planificado" },
+                    { id: 2035, time: "21:30", end_time: "", title: "Pernocta gratis Tesla en Iseltwald - Glooten", category: "Hotel", location: "Iseltwald Glooten", map_url: "https://maps.app.goo.gl/SYAc4mfjt83HynkN8", image_url: "", cost: 0, confirmation_code: "", notes: "Área al lado de la autopista con mesas cubiertas y baños limpios.", status: "Planificado" }
+                ]
+            },
+            {
+                id: 208,
+                day_number: 8,
+                date: "2026-08-31",
+                title: "Principado de Liechtenstein (Vaduz y Malbun)",
+                activities: [
+                    { id: 2036, time: "08:30", end_time: "10:30", title: "Trayecto Walensee -> Vaduz (Liechtenstein)", category: "Transporte", location: "Vaduz, Liechtenstein", map_url: "https://maps.google.com/?q=Vaduz+Liechtenstein", image_url: "", cost: 0, confirmation_code: "", notes: "Entrada al Principado de Liechtenstein.", status: "Planificado" },
+                    { id: 2037, time: "10:30", end_time: "14:00", title: "Visita Vaduz (Castillo, Städtle y Puente de Madera)", category: "Actividad", location: "Castillo de Vaduz", map_url: "https://maps.google.com/?q=Castillo+de+Vaduz", image_url: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1000&auto=format&fit=crop", cost: 0, confirmation_code: "", notes: "Residencia principesca y paseo por el centro histórico.", status: "Planificado" },
+                    { id: 2038, time: "15:00", end_time: "18:00", title: "Ruta de Senderismo Fürstensteig (Gaflei / Malbun 1.600m)", category: "Actividad", location: "Gaflei, Liechtenstein", map_url: "https://maps.google.com/?q=Gaflei+Liechtenstein", image_url: "", cost: 0, confirmation_code: "", notes: "Espectacular ruta alpina sobre el Valle del Rin.", status: "Planificado" },
+                    { id: 2039, time: "19:00", end_time: "", title: "Carga Tesla en Supercharger Vaduz / Buchs", category: "Transporte", location: "Supercharger Buchs", map_url: "", image_url: "", cost: 0, confirmation_code: "", notes: "Recarga rápida Tesla.", status: "Planificado" },
+                    { id: 2040, time: "21:30", end_time: "", title: "Pernocta gratis en Rheinpark Stadion Parking (Vaduz)", category: "Hotel", location: "Rheinpark Stadion, Vaduz", map_url: "https://maps.google.com/?q=Rheinpark+Stadion+Vaduz", image_url: "", cost: 0, confirmation_code: "", notes: "Aparcamiento gratuito muy amplio con baños a 3 min de Vaduz.", status: "Planificado" }
+                ]
+            },
+            {
+                id: 209,
+                day_number: 9,
+                date: "2026-09-01",
+                title: "Segundo día en Liechtenstein y Alrededores",
+                activities: [
+                    { id: 2041, time: "10:00", end_time: "16:00", title: "Excursión en Montaña Malbun y Relax en Vaduz", category: "Actividad", location: "Malbun, Liechtenstein", map_url: "https://maps.google.com/?q=Malbun+Liechtenstein", image_url: "", cost: 0, confirmation_code: "", notes: "Rutas de senderismo en la zona alta de Liechtenstein.", status: "Planificado" },
+                    { id: 2042, time: "18:00", end_time: "", title: "Duchas en Instalaciones Deportivas / Vaduz", category: "Nota", location: "Vaduz", map_url: "", image_url: "", cost: 0, confirmation_code: "", notes: "Aseo.", status: "Planificado" },
+                    { id: 2043, time: "21:30", end_time: "", title: "Pernocta en Rheinpark Stadion Parking", category: "Hotel", location: "Rheinpark Stadion, Vaduz", map_url: "", image_url: "", cost: 0, confirmation_code: "", notes: "Segunda noche en Vaduz.", status: "Planificado" }
+                ]
+            },
+            {
+                id: 210,
+                day_number: 10,
+                date: "2026-09-02",
+                title: "Cataratas del Rin (Schaffhausen) y Retorno",
+                activities: [
+                    { id: 2044, time: "09:00", end_time: "12:30", title: "Cataratas del Rin (Rheinfall) y Castillo de Laufen", category: "Actividad", location: "Cataratas del Rin, Schaffhausen", map_url: "https://maps.google.com/?q=Cataratas+del+Rin", image_url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1000&auto=format&fit=crop", cost: 5, confirmation_code: "", notes: "El mayor salto de agua de Europa Central.", status: "Planificado" },
+                    { id: 2045, time: "13:30", end_time: "20:00", title: "Inicio del viaje de regreso por el sur de Francia (110km)", category: "Transporte", location: "Francia", map_url: "", image_url: "", cost: 0, confirmation_code: "", notes: "Camino de vuelta hacia el sur.", status: "Planificado" },
+                    { id: 2046, time: "18:00", end_time: "", title: "Carga Tesla: Supercharger Schaffhausen / Dietikon", category: "Transporte", location: "Supercharger Schaffhausen", map_url: "", image_url: "", cost: 0, confirmation_code: "", notes: "Supercharger Tesla.", status: "Planificado" },
+                    { id: 2047, time: "22:00", end_time: "", title: "Pernocta en ruta (Francia)", category: "Hotel", location: "Francia", map_url: "", image_url: "", cost: 0, confirmation_code: "", notes: "Pernocta Tesla en ruta.", status: "Planificado" }
+                ]
+            },
+            {
+                id: 211,
+                day_number: 11,
+                date: "2026-09-03",
+                title: "Regreso a Montpellier (Francia)",
+                activities: [
+                    { id: 2048, time: "08:30", end_time: "16:00", title: "Trayecto hacia Montpellier (670km)", category: "Transporte", location: "Montpellier, Francia", map_url: "https://maps.google.com/?q=Montpellier+Francia", image_url: "", cost: 0, confirmation_code: "", notes: "Tramos de autopista francesa.", status: "Planificado" },
+                    { id: 2049, time: "16:30", end_time: "19:30", title: "Visita a Montpellier (Place de la Comédie y L'Écusson)", category: "Actividad", location: "Place de la Comedie, Montpellier", map_url: "https://maps.google.com/?q=Place+de+la+Comedie+Montpellier", image_url: "https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=1000&auto=format&fit=crop", cost: 0, confirmation_code: "", notes: "Paseo por la emblemática plaza y el casco medieval de l'Écusson.", status: "Planificado" },
+                    { id: 2050, time: "21:30", end_time: "", title: "Pernocta en Área de Palavas-les-Flots (~15€)", category: "Hotel", location: "Palavas-les-Flots", map_url: "https://maps.google.com/?q=Palavas-les-Flots", image_url: "", cost: 15, confirmation_code: "", notes: "Área de autocaravanas con servicios sanitarios y playa.", status: "Planificado" }
+                ]
+            },
+            {
+                id: 212,
+                day_number: 12,
+                date: "2026-09-04",
+                title: "Montpellier -> Valencia",
+                activities: [
+                    { id: 2051, time: "09:00", end_time: "16:00", title: "Trayecto Montpellier -> Valencia (610km)", category: "Transporte", location: "Valencia, España", map_url: "https://maps.google.com/?q=Valencia", image_url: "", cost: 0, confirmation_code: "", notes: "Ruta final de regreso a Valencia.", status: "Planificado" },
+                    { id: 2052, time: "13:00", end_time: "", title: "Ducha y descanso en ruta (Village Catalan)", category: "Nota", location: "Village Catalan, Francia", map_url: "", image_url: "", cost: 0, confirmation_code: "", notes: "Parada de descanso.", status: "Planificado" },
+                    { id: 2053, time: "20:00", end_time: "", title: "Llegada a Casa en Valencia", category: "Hotel", location: "Valencia", map_url: "", image_url: "", cost: 0, confirmation_code: "", notes: "Llegada al hogar.", status: "Planificado" }
+                ]
+            },
+            {
+                id: 213,
+                day_number: 13,
+                date: "2026-09-05",
+                title: "Llegada y Descanso",
+                activities: [
+                    { id: 2054, time: "10:00", end_time: "", title: "Fin del viaje y descanso en casa", category: "Nota", location: "Valencia", map_url: "", image_url: "", cost: 0, confirmation_code: "", notes: "Descanso tras la gran ruta por Suiza.", status: "Planificado" }
+                ]
+            }
+        ],
+        expenses: [
+            { id: 4001, title: "Pernocta Saint-Germain", category: "Alojamiento", amount: 10, currency: "EUR", date: "2026-08-28", paid: 0, notes: "" },
+            { id: 4002, title: "Teleférico Glacier 3000", category: "Entradas", amount: 80, currency: "EUR", date: "2026-08-29", paid: 0, notes: "" },
+            { id: 4003, title: "Gornergrat Zermatt", category: "Entradas", amount: 90, currency: "EUR", date: "2026-08-29", paid: 0, notes: "" }
+        ],
+        checklist: [
+            { id: 5001, category: "Documentación", item: "DNI / Pasaporte vigente", completed: 0 },
+            { id: 5002, category: "Documentación", item: "Carnet de conducir original", completed: 0 },
+            { id: 5003, category: "Documentación", item: "Seguro vehículo con asistencia internacional", completed: 0 },
+            { id: 5004, category: "Documentación", item: "Viñeta de autopista Suiza (obligatoria)", completed: 0 },
+            { id: 5005, category: "Equipamiento Tesla", item: "Colchón a medida para Model 3", completed: 0 },
+            { id: 5006, category: "Equipamiento Tesla", item: "Parasoles térmicos para todas las lunas", completed: 0 },
+            { id: 5007, category: "Equipamiento Tesla", item: "Nevera de corcho & Kit de cocina (hornillo y mesa)", completed: 0 },
+            { id: 5008, category: "Equipamiento Tesla", item: "Almohadas y saco de dormir de alta montaña", completed: 0 },
+            { id: 5009, category: "Logística y Aseo", item: "Monedas de 1€, 2€ y 3 CHF en la guantera para duchas", completed: 0 },
+            { id: 5010, category: "Logística y Aseo", item: "Jabón biodegradable & Toallitas XL", completed: 0 },
+            { id: 5011, category: "Logística y Aseo", item: "Ropa técnica por capas y calzado de trekking", completed: 0 }
+        ]
     }
 ];
 
@@ -142,11 +331,28 @@ const COORDS_MAP = {
     'Playa de las Catedrales': [43.5539, -7.1166],
     'Luarca': [43.5436, -6.5358],
     'Taramundi': [43.3601, -7.1086],
-    'Tokio': [35.6762, 139.6503],
-    'Shinjuku': [35.6938, 139.7034],
-    'Asakusa': [35.7148, 139.7967],
-    'Kioto': [35.0116, 135.7681],
-    'Osaka': [34.6937, 135.5023]
+    'Tossa de Mar': [41.7225, 2.9325],
+    'Vila Vella': [41.7169, 2.9333],
+    'La Camarga': [43.5333, 4.6333],
+    'Pont de Gau': [43.4883, 4.4042],
+    'Annecy': [45.8992, 6.1294],
+    'Ginebra': [46.2044, 6.1432],
+    'Montreux': [46.4312, 6.9107],
+    'Castillo de Chillon': [46.4142, 6.9275],
+    'Savièse': [46.2556, 7.3486],
+    'Glacier 3000': [46.3536, 7.2064],
+    'Zermatt': [46.0207, 7.7491],
+    'Gornergrat': [45.9831, 7.7842],
+    'Furkapass': [46.5728, 8.4150],
+    'Grimselpass': [46.5714, 8.3378],
+    'Meiringen': [46.7276, 8.1818],
+    'Aareschlucht': [46.7194, 8.2044],
+    'Iseltwald': [46.7119, 7.9622],
+    'Lauterbrunnen': [46.5935, 7.9077],
+    'Vaduz': [47.1415, 9.5215],
+    'Malbun': [47.1028, 9.6086],
+    'Cataratas del Rin': [47.6779, 8.6156],
+    'Montpellier': [43.6108, 3.8767]
 };
 
 let state = {
@@ -173,7 +379,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function loadLocalData() {
-    const CURRENT_STORAGE_KEY = 'travel_planner_data_v10';
+    const CURRENT_STORAGE_KEY = 'travel_planner_data_v20';
     const data = localStorage.getItem(CURRENT_STORAGE_KEY);
     if (data) {
         try {
@@ -191,12 +397,12 @@ function loadLocalData() {
 }
 
 function resetToDefaultData() {
-    if (confirm("¿Restablecer los datos e itinerario original de Galicia?")) {
+    if (confirm("¿Restablecer los itinerarios por defecto (Galicia y Suiza en Tesla)?")) {
         localStorage.clear();
         state.trips = DEFAULT_TRIPS;
         saveLocalData();
         if (state.currentTrip) {
-            loadTripDetail(DEFAULT_TRIPS[0].id);
+            loadTripDetail(DEFAULT_TRIPS[1].id);
         } else {
             renderTrips();
         }
@@ -204,7 +410,7 @@ function resetToDefaultData() {
 }
 
 function saveLocalData() {
-    localStorage.setItem('travel_planner_data_v10', JSON.stringify(state.trips));
+    localStorage.setItem('travel_planner_data_v20', JSON.stringify(state.trips));
     showSaveToast();
 }
 
@@ -453,7 +659,7 @@ function renderTripRouteMap() {
         leafletMap = null;
     }
 
-    leafletMap = L.map('route-map').setView(waypoints[0].coords, 8);
+    leafletMap = L.map('route-map').setView(waypoints[0].coords, 7);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
