@@ -123,7 +123,7 @@ const DEFAULT_TRIPS = [
     }
 ];
 
-// Dictionary of Place Coordinates for Route Mapping
+// Coordenadas conocidas para mapa interactivo
 const COORDS_MAP = {
     'Valencia': [39.4699, -0.3763],
     'Alto de León': [40.7022, -4.1378],
@@ -155,7 +155,8 @@ let state = {
     currentTrip: null,
     activeTripFilter: 'all',
     activeCategoryFilter: 'all',
-    activeTab: 'itinerary'
+    activeTab: 'itinerary',
+    mapMode: 'gmaps'
 };
 
 let leafletMap = null;
@@ -301,7 +302,6 @@ function loadTripDetail(tripId) {
     document.getElementById('view-trip-detail').classList.remove('hidden');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // Render interactive route map after DOM update
     setTimeout(() => {
         renderTripRouteMap();
     }, 100);
@@ -335,22 +335,42 @@ function renderTripDetail() {
     renderChecklist();
 }
 
-// Render Interactive Route Map with Leaflet + Google Maps Route Link
+function toggleMapType(type) {
+    state.mapMode = type;
+    const gmapsWrapper = document.getElementById('gmaps-frame-wrapper');
+    const leafletWrapper = document.getElementById('leaflet-frame-wrapper');
+    const btnGmaps = document.getElementById('btn-map-type-gmaps');
+    const btnLeaflet = document.getElementById('btn-map-type-leaflet');
+
+    if (type === 'gmaps') {
+        gmapsWrapper.classList.remove('hidden');
+        leafletWrapper.classList.add('hidden');
+        btnGmaps.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-sky-600 text-white shadow-2xs";
+        btnLeaflet.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200";
+    } else {
+        gmapsWrapper.classList.add('hidden');
+        leafletWrapper.classList.remove('hidden');
+        btnLeaflet.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-sky-600 text-white shadow-2xs";
+        btnGmaps.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200";
+        if (leafletMap) {
+            setTimeout(() => leafletMap.invalidateSize(), 200);
+        }
+    }
+}
+
 function renderTripRouteMap() {
     if (!state.currentTrip || !state.currentTrip.days) return;
 
     const mapBox = document.getElementById('trip-map-box');
-    const mapDiv = document.getElementById('route-map');
-    if (!mapDiv) return;
-
-    // Collect all location points in order
-    const waypoints = [];
+    const gmapsIframe = document.getElementById('gmaps-iframe');
     const googleMapPoints = [];
+    const waypoints = [];
 
     state.currentTrip.days.forEach(d => {
         d.activities.forEach(a => {
             if (a.location) {
-                // Check if known in dictionary or extract coords
+                googleMapPoints.push(a.location);
+
                 let coords = null;
                 for (const [key, c] of Object.entries(COORDS_MAP)) {
                     if (a.location.toLowerCase().includes(key.toLowerCase()) || a.title.toLowerCase().includes(key.toLowerCase())) {
@@ -368,69 +388,70 @@ function renderTripRouteMap() {
                         map_url: a.map_url || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(a.location)}`
                     });
                 }
-                googleMapPoints.push(a.location);
             }
         });
     });
 
-    if (waypoints.length === 0) {
+    if (googleMapPoints.length === 0) {
         mapBox.classList.add('hidden');
         return;
     }
     mapBox.classList.remove('hidden');
 
-    // Build Google Maps Directions Link
+    // 1. Google Maps Embed iFrame (Nativo de Google Maps)
     const startLoc = googleMapPoints[0];
     const endLoc = googleMapPoints[googleMapPoints.length - 1];
-    const middleWaypoints = googleMapPoints.slice(1, -1).slice(0, 8); // Max waypoints for URL
 
+    // Google Maps Embed Directions iFrame
+    const embedUrl = `https://maps.google.com/maps?saddr=${encodeURIComponent(startLoc)}&daddr=${encodeURIComponent(endLoc)}&output=embed`;
+    gmapsIframe.src = embedUrl;
+
+    // Full Navigation Link for App
+    const middleWaypoints = googleMapPoints.slice(1, -1).slice(0, 8);
     let fullGmapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(startLoc)}&destination=${encodeURIComponent(endLoc)}`;
     if (middleWaypoints.length > 0) {
         fullGmapsUrl += `&waypoints=${middleWaypoints.map(w => encodeURIComponent(w)).join('|')}`;
     }
     document.getElementById('btn-open-full-google-maps').href = fullGmapsUrl;
 
-    // Initialize or reset Leaflet map
-    if (leafletMap) {
-        leafletMap.remove();
-        leafletMap = null;
+    // 2. Leaflet Fallback Interactive Map
+    if (waypoints.length > 0) {
+        if (leafletMap) {
+            leafletMap.remove();
+            leafletMap = null;
+        }
+
+        leafletMap = L.map('route-map').setView(waypoints[0].coords, 8);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '&copy; OpenStreetMap'
+        }).addTo(leafletMap);
+
+        const latLngs = waypoints.map(w => w.coords);
+        const polyline = L.polyline(latLngs, {
+            color: '#0284c7',
+            weight: 4,
+            opacity: 0.85,
+            dashArray: '6, 6'
+        }).addTo(leafletMap);
+
+        waypoints.forEach(w => {
+            const marker = L.marker(w.coords).addTo(leafletMap);
+            marker.bindPopup(`
+                <div style="font-family:sans-serif; padding:4px;">
+                    <span style="background:#0284c7; color:#fff; font-size:10px; font-weight:bold; padding:2px 6px; border-radius:4px;">Día ${w.day}</span>
+                    <h4 style="margin:4px 0; font-size:13px; font-weight:bold; color:#0f172a;">${w.title}</h4>
+                    <p style="margin:2px 0 8px 0; font-size:11px; color:#475569;">📍 ${w.location}</p>
+                    <a href="${w.map_url}" target="_blank" style="display:inline-block; background:#10b981; color:#fff; font-size:11px; font-weight:bold; padding:4px 8px; border-radius:6px; text-decoration:none;">Navegar en Google Maps</a>
+                </div>
+            `);
+        });
+
+        try {
+            leafletMap.fitBounds(polyline.getBounds().pad(0.15));
+        } catch (e) {}
     }
-
-    const firstCoord = waypoints[0].coords;
-    leafletMap = L.map('route-map').setView(firstCoord, 8);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18,
-        attribution: '&copy; OpenStreetMap'
-    }).addTo(leafletMap);
-
-    const latLngs = waypoints.map(w => w.coords);
-
-    // Draw connected line trajectory
-    const polyline = L.polyline(latLngs, {
-        color: '#0284c7',
-        weight: 4,
-        opacity: 0.85,
-        dashArray: '6, 6'
-    }).addTo(leafletMap);
-
-    // Add markers for waypoints
-    waypoints.forEach((w, idx) => {
-        const marker = L.marker(w.coords).addTo(leafletMap);
-        marker.bindPopup(`
-            <div style="font-family:sans-serif; padding:4px;">
-                <span style="background:#0284c7; color:#fff; font-size:10px; font-weight:bold; padding:2px 6px; border-radius:4px;">Día ${w.day}</span>
-                <h4 style="margin:4px 0; font-size:13px; font-weight:bold; color:#0f172a;">${w.title}</h4>
-                <p style="margin:2px 0 8px 0; font-size:11px; color:#475569;">📍 ${w.location}</p>
-                <a href="${w.map_url}" target="_blank" style="display:inline-block; background:#10b981; color:#fff; font-size:11px; font-weight:bold; padding:4px 8px; border-radius:6px; text-decoration:none;">Navegar en Google Maps</a>
-            </div>
-        `);
-    });
-
-    // Auto-fit map to show the full route
-    try {
-        leafletMap.fitBounds(polyline.getBounds().pad(0.15));
-    } catch (e) {}
 }
 
 function switchTripTab(tabName) {
@@ -446,10 +467,6 @@ function switchTripTab(tabName) {
             content.classList.add('hidden');
         }
     });
-
-    if (tabName === 'itinerary' && leafletMap) {
-        setTimeout(() => leafletMap.invalidateSize(), 200);
-    }
 }
 
 function renderDaysItinerary() {
