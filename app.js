@@ -123,6 +123,33 @@ const DEFAULT_TRIPS = [
     }
 ];
 
+// Dictionary of Place Coordinates for Route Mapping
+const COORDS_MAP = {
+    'Valencia': [39.4699, -0.3763],
+    'Alto de León': [40.7022, -4.1378],
+    'Ourense': [42.3358, -7.8639],
+    'Cimadevila': [42.3365, -7.8645],
+    'Ribeira Sacra': [42.3683, -7.6744],
+    'Termas Outariz': [42.3486, -7.9142],
+    'Vigo': [42.2406, -8.7207],
+    'Islas Cíes': [42.2272, -8.9056],
+    'Baiona': [42.1189, -8.8497],
+    'Santiago': [42.8805, -8.5457],
+    'Finisterre': [42.8824, -9.2731],
+    'Muxía': [43.1044, -9.2172],
+    'A Coruña': [43.3859, -8.4065],
+    'Torre de Hércules': [43.3859, -8.4065],
+    'Fragas do Eume': [43.4172, -8.0675],
+    'Playa de las Catedrales': [43.5539, -7.1166],
+    'Luarca': [43.5436, -6.5358],
+    'Taramundi': [43.3601, -7.1086],
+    'Tokio': [35.6762, 139.6503],
+    'Shinjuku': [35.6938, 139.7034],
+    'Asakusa': [35.7148, 139.7967],
+    'Kioto': [35.0116, 135.7681],
+    'Osaka': [34.6937, 135.5023]
+};
+
 let state = {
     trips: [],
     currentTrip: null,
@@ -130,6 +157,8 @@ let state = {
     activeCategoryFilter: 'all',
     activeTab: 'itinerary'
 };
+
+let leafletMap = null;
 
 const CATEGORIES_MAP = {
     'Vuelo': { icon: '✈️', badgeClass: 'badge-vuelo', label: 'Vuelo' },
@@ -271,6 +300,11 @@ function loadTripDetail(tripId) {
     document.getElementById('view-dashboard').classList.add('hidden');
     document.getElementById('view-trip-detail').classList.remove('hidden');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Render interactive route map after DOM update
+    setTimeout(() => {
+        renderTripRouteMap();
+    }, 100);
 }
 
 function renderTripDetail() {
@@ -301,6 +335,104 @@ function renderTripDetail() {
     renderChecklist();
 }
 
+// Render Interactive Route Map with Leaflet + Google Maps Route Link
+function renderTripRouteMap() {
+    if (!state.currentTrip || !state.currentTrip.days) return;
+
+    const mapBox = document.getElementById('trip-map-box');
+    const mapDiv = document.getElementById('route-map');
+    if (!mapDiv) return;
+
+    // Collect all location points in order
+    const waypoints = [];
+    const googleMapPoints = [];
+
+    state.currentTrip.days.forEach(d => {
+        d.activities.forEach(a => {
+            if (a.location) {
+                // Check if known in dictionary or extract coords
+                let coords = null;
+                for (const [key, c] of Object.entries(COORDS_MAP)) {
+                    if (a.location.toLowerCase().includes(key.toLowerCase()) || a.title.toLowerCase().includes(key.toLowerCase())) {
+                        coords = c;
+                        break;
+                    }
+                }
+
+                if (coords) {
+                    waypoints.push({
+                        day: d.day_number,
+                        title: a.title,
+                        location: a.location,
+                        coords: coords,
+                        map_url: a.map_url || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(a.location)}`
+                    });
+                }
+                googleMapPoints.push(a.location);
+            }
+        });
+    });
+
+    if (waypoints.length === 0) {
+        mapBox.classList.add('hidden');
+        return;
+    }
+    mapBox.classList.remove('hidden');
+
+    // Build Google Maps Directions Link
+    const startLoc = googleMapPoints[0];
+    const endLoc = googleMapPoints[googleMapPoints.length - 1];
+    const middleWaypoints = googleMapPoints.slice(1, -1).slice(0, 8); // Max waypoints for URL
+
+    let fullGmapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(startLoc)}&destination=${encodeURIComponent(endLoc)}`;
+    if (middleWaypoints.length > 0) {
+        fullGmapsUrl += `&waypoints=${middleWaypoints.map(w => encodeURIComponent(w)).join('|')}`;
+    }
+    document.getElementById('btn-open-full-google-maps').href = fullGmapsUrl;
+
+    // Initialize or reset Leaflet map
+    if (leafletMap) {
+        leafletMap.remove();
+        leafletMap = null;
+    }
+
+    const firstCoord = waypoints[0].coords;
+    leafletMap = L.map('route-map').setView(firstCoord, 8);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '&copy; OpenStreetMap'
+    }).addTo(leafletMap);
+
+    const latLngs = waypoints.map(w => w.coords);
+
+    // Draw connected line trajectory
+    const polyline = L.polyline(latLngs, {
+        color: '#0284c7',
+        weight: 4,
+        opacity: 0.85,
+        dashArray: '6, 6'
+    }).addTo(leafletMap);
+
+    // Add markers for waypoints
+    waypoints.forEach((w, idx) => {
+        const marker = L.marker(w.coords).addTo(leafletMap);
+        marker.bindPopup(`
+            <div style="font-family:sans-serif; padding:4px;">
+                <span style="background:#0284c7; color:#fff; font-size:10px; font-weight:bold; padding:2px 6px; border-radius:4px;">Día ${w.day}</span>
+                <h4 style="margin:4px 0; font-size:13px; font-weight:bold; color:#0f172a;">${w.title}</h4>
+                <p style="margin:2px 0 8px 0; font-size:11px; color:#475569;">📍 ${w.location}</p>
+                <a href="${w.map_url}" target="_blank" style="display:inline-block; background:#10b981; color:#fff; font-size:11px; font-weight:bold; padding:4px 8px; border-radius:6px; text-decoration:none;">Navegar en Google Maps</a>
+            </div>
+        `);
+    });
+
+    // Auto-fit map to show the full route
+    try {
+        leafletMap.fitBounds(polyline.getBounds().pad(0.15));
+    } catch (e) {}
+}
+
 function switchTripTab(tabName) {
     state.activeTab = tabName;
     ['itinerary', 'budget', 'checklist'].forEach(t => {
@@ -314,6 +446,10 @@ function switchTripTab(tabName) {
             content.classList.add('hidden');
         }
     });
+
+    if (tabName === 'itinerary' && leafletMap) {
+        setTimeout(() => leafletMap.invalidateSize(), 200);
+    }
 }
 
 function renderDaysItinerary() {
@@ -437,7 +573,6 @@ function filterActivities(cat) {
 
 function renderExpenses() {
     if (!state.currentTrip) return;
-    const { trip } = state;
     const expenses = state.currentTrip.expenses || [];
 
     let totalSpent = 0;
@@ -717,6 +852,7 @@ function handleActivitySubmit(e) {
     saveLocalData();
     closeModal('modal-activity');
     renderTripDetail();
+    setTimeout(() => renderTripRouteMap(), 100);
 }
 
 function toggleActivityStatus(actId, currentStatus) {
@@ -741,6 +877,7 @@ function deleteActivity(actId) {
         }
         saveLocalData();
         renderDaysItinerary();
+        setTimeout(() => renderTripRouteMap(), 100);
     }
 }
 
