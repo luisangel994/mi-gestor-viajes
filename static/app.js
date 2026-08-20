@@ -60,11 +60,9 @@ function renderTrips() {
     const todayStr = new Date().toISOString().split('T')[0];
 
     const filtered = state.trips.filter(t => {
-        // Search filter
         const matchSearch = t.title.toLowerCase().includes(searchVal) || t.destination.toLowerCase().includes(searchVal);
         if (!matchSearch) return false;
 
-        // Date status filter
         if (state.activeTripFilter === 'upcoming') {
             return t.end_date >= todayStr;
         } else if (state.activeTripFilter === 'past') {
@@ -157,7 +155,6 @@ function renderTripDetail() {
     if (!state.currentTrip) return;
     const { trip, days, expenses, checklist } = state.currentTrip;
 
-    // Header values
     document.getElementById('trip-detail-icon').textContent = trip.cover_image || '✈️';
     document.getElementById('trip-detail-title').textContent = trip.title;
     document.getElementById('trip-detail-destination').querySelector('span').textContent = trip.destination;
@@ -209,7 +206,6 @@ function renderDaysItinerary() {
         const dayCard = document.createElement('div');
         dayCard.className = "bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4";
 
-        // Filter activities by category
         const filteredActs = d.activities.filter(a => {
             if (state.activeCategoryFilter === 'all') return true;
             return a.category === state.activeCategoryFilter;
@@ -224,15 +220,15 @@ function renderDaysItinerary() {
             activitiesHTML = filteredActs.map(a => {
                 const catMeta = CATEGORIES_MAP[a.category] || CATEGORIES_MAP['Actividad'];
                 const statusClass = a.status === 'Completado' ? 'status-completado' : (a.status === 'Reservado' ? 'status-reservado' : 'status-planificado');
+                const mapLink = a.map_url || (a.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(a.location)}` : '');
 
                 return `
                     <div class="timeline-item relative pl-8 py-2 group">
-                        <!-- Icon Circle -->
                         <div class="absolute left-0 top-2.5 w-6 h-6 rounded-full bg-white border-2 border-sky-500 flex items-center justify-center text-xs z-10 shadow-sm">
                             ${catMeta.icon}
                         </div>
 
-                        <div class="bg-slate-50 border border-slate-200/80 hover:border-sky-300 rounded-xl p-3.5 transition-all space-y-2">
+                        <div class="bg-slate-50 border border-slate-200/80 hover:border-sky-300 rounded-xl p-4 transition-all space-y-3">
                             <div class="flex items-start justify-between gap-3">
                                 <div class="space-y-1">
                                     <div class="flex items-center gap-2 flex-wrap">
@@ -242,7 +238,7 @@ function renderDaysItinerary() {
                                             ${a.status}
                                         </span>
                                     </div>
-                                    <h4 class="font-bold text-slate-900 text-base">${a.title}</h4>
+                                    <h4 class="font-bold text-slate-900 text-base leading-snug">${a.title}</h4>
                                 </div>
                                 <div class="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity print:hidden">
                                     <button onclick="openEditActivityModal(${a.id})" class="p-1 text-slate-400 hover:text-slate-700 rounded" title="Editar"><i class="ri-edit-line"></i></button>
@@ -250,12 +246,25 @@ function renderDaysItinerary() {
                                 </div>
                             </div>
 
-                            ${a.location ? `
-                                <p class="text-xs font-medium text-slate-600 flex items-center gap-1">
-                                    <i class="ri-map-pin-2-line text-sky-500"></i> ${a.location}
-                                    ${a.map_url ? `<a href="${a.map_url}" target="_blank" class="text-sky-600 hover:underline ml-1 print:hidden" title="Ver en Google Maps"><i class="ri-external-link-line"></i> Mapa</a>` : ''}
-                                </p>
+                            ${a.image_url ? `
+                                <div class="rounded-xl overflow-hidden max-h-48 border border-slate-200 my-2">
+                                    <img src="${a.image_url}" alt="${a.title}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                                </div>
                             ` : ''}
+
+                            <div class="flex items-center justify-between gap-2 flex-wrap">
+                                ${a.location ? `
+                                    <p class="text-xs font-medium text-slate-600 flex items-center gap-1">
+                                        <i class="ri-map-pin-2-line text-sky-500"></i> <span>${a.location}</span>
+                                    </p>
+                                ` : '<div></div>'}
+
+                                ${mapLink ? `
+                                    <a href="${mapLink}" target="_blank" rel="noopener noreferrer" class="px-3 py-1 bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold rounded-lg shadow-2xs transition-all inline-flex items-center gap-1 print:hidden" title="Abrir en Google Maps">
+                                        <i class="ri-navigation-line"></i> <span>Google Maps</span>
+                                    </a>
+                                ` : ''}
+                            </div>
 
                             ${a.confirmation_code ? `
                                 <p class="text-xs font-semibold text-indigo-700 bg-indigo-50 border border-indigo-100 px-2.5 py-1 rounded-md inline-block">
@@ -264,7 +273,7 @@ function renderDaysItinerary() {
                             ` : ''}
 
                             ${a.notes ? `
-                                <p class="text-xs text-slate-500 italic bg-white p-2 rounded border border-slate-100">${a.notes}</p>
+                                <div class="text-xs text-slate-600 bg-white p-2.5 rounded-lg border border-slate-100 whitespace-pre-line">${a.notes}</div>
                             ` : ''}
 
                             ${a.cost && a.cost > 0 ? `
@@ -364,7 +373,6 @@ function renderChecklist() {
     const container = document.getElementById('checklist-items-container');
     container.innerHTML = '';
 
-    // Group items by category
     const categories = {};
     checklist.forEach(item => {
         const cat = item.category || 'Equipaje';
@@ -485,7 +493,6 @@ function openNewActivityModal(preferredDayId = null) {
     document.getElementById('form-activity').reset();
     document.getElementById('act-form-trip-id').value = state.currentTrip.trip.id;
 
-    // Populate day select options
     const select = document.getElementById('act-input-day-id');
     select.innerHTML = state.currentTrip.days.map(d => `
         <option value="${d.id}" ${preferredDayId == d.id ? 'selected' : ''}>Día ${d.day_number} (${formatDate(d.date)})</option>
@@ -521,6 +528,7 @@ function openEditActivityModal(actId) {
     document.getElementById('act-input-code').value = foundAct.confirmation_code || '';
     document.getElementById('act-input-status').value = foundAct.status || 'Planificado';
     document.getElementById('act-input-map-url').value = foundAct.map_url || '';
+    document.getElementById('act-input-image-url').value = foundAct.image_url || '';
     document.getElementById('act-input-notes').value = foundAct.notes || '';
 
     document.getElementById('modal-activity-title').textContent = 'Editar Actividad';
@@ -545,6 +553,7 @@ async function handleActivitySubmit(e) {
         confirmation_code: document.getElementById('act-input-code').value,
         status: document.getElementById('act-input-status').value,
         map_url: document.getElementById('act-input-map-url').value,
+        image_url: document.getElementById('act-input-image-url').value,
         notes: document.getElementById('act-input-notes').value
     };
 
@@ -679,20 +688,24 @@ function printTripItinerary() {
 // Export Self-contained Offline HTML file for Mobile
 function exportOfflineHTML() {
     if (!state.currentTrip) return;
-    const { trip, days, checklist } = state.currentTrip;
+    const { trip, days } = state.currentTrip;
 
     let daysHTML = days.map(d => {
-        const acts = d.activities.map(a => `
-            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px; margin-bottom:10px;">
-                <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:14px;">
-                    <span>${a.time ? a.time + ' ' : ''}${a.title}</span>
-                    <span style="background:#e0f2fe; color:#0369a1; padding:2px 8px; border-radius:12px; font-size:11px;">${a.category}</span>
+        const acts = d.activities.map(a => {
+            const mapLink = a.map_url || (a.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(a.location)}` : '');
+            return `
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px; margin-bottom:10px;">
+                    <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:14px;">
+                        <span>${a.time ? a.time + ' ' : ''}${a.title}</span>
+                        <span style="background:#e0f2fe; color:#0369a1; padding:2px 8px; border-radius:12px; font-size:11px;">${a.category}</span>
+                    </div>
+                    ${a.image_url ? `<img src="${a.image_url}" style="width:100%; max-height:200px; object-fit:cover; border-radius:8px; margin:8px 0;">` : ''}
+                    ${a.location ? `<div style="font-size:12px; color:#475569; margin-top:4px;">📍 ${a.location} ${mapLink ? `<a href="${mapLink}" target="_blank" style="color:#0284c7; font-weight:bold; margin-left:6px;">[Navegar con Google Maps]</a>` : ''}</div>` : ''}
+                    ${a.confirmation_code ? `<div style="font-size:12px; color:#4338ca; background:#e0e7ff; padding:2px 6px; border-radius:4px; display:inline-block; margin-top:4px;">🎫 Reserva: ${a.confirmation_code}</div>` : ''}
+                    ${a.notes ? `<div style="font-size:12px; color:#64748b; font-style:italic; margin-top:4px; background:#fff; padding:6px; border-radius:6px; white-space:pre-line;">${a.notes}</div>` : ''}
                 </div>
-                ${a.location ? `<div style="font-size:12px; color:#475569; margin-top:4px;">📍 ${a.location} ${a.map_url ? `<a href="${a.map_url}" target="_blank" style="color:#0284c7;">(Mapa)</a>` : ''}</div>` : ''}
-                ${a.confirmation_code ? `<div style="font-size:12px; color:#4338ca; background:#e0e7ff; padding:2px 6px; border-radius:4px; display:inline-block; margin-top:4px;">🎫 Reserva: ${a.confirmation_code}</div>` : ''}
-                ${a.notes ? `<div style="font-size:12px; color:#64748b; font-style:italic; margin-top:4px; background:#fff; padding:6px; border-radius:6px;">${a.notes}</div>` : ''}
-            </div>
-        `).join('') || '<div style="font-size:12px; color:#94a3b8; font-style:italic;">Sin actividades programadas.</div>';
+            `;
+        }).join('') || '<div style="font-size:12px; color:#94a3b8; font-style:italic;">Sin actividades programadas.</div>';
 
         return `
             <div style="background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:16px; margin-bottom:16px;">

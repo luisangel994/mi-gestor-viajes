@@ -34,6 +34,7 @@ class ActivityCreate(BaseModel):
     category: Optional[str] = "Actividad" # Vuelo, Hotel, Transporte, Actividad, Restaurante, Nota
     location: Optional[str] = ""
     map_url: Optional[str] = ""
+    image_url: Optional[str] = ""
     cost: Optional[float] = 0.0
     confirmation_code: Optional[str] = ""
     notes: Optional[str] = ""
@@ -46,6 +47,7 @@ class ActivityUpdate(BaseModel):
     category: Optional[str] = None
     location: Optional[str] = None
     map_url: Optional[str] = None
+    image_url: Optional[str] = None
     cost: Optional[float] = None
     confirmation_code: Optional[str] = None
     notes: Optional[str] = None

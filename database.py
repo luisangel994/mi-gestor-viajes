@@ -55,6 +55,7 @@ def init_db():
         category TEXT DEFAULT 'Actividad',
         location TEXT,
         map_url TEXT,
+        image_url TEXT,
         cost REAL DEFAULT 0.0,
         confirmation_code TEXT,
         notes TEXT,
@@ -64,6 +65,12 @@ def init_db():
         FOREIGN KEY (day_id) REFERENCES days(id) ON DELETE CASCADE
     );
     """)
+
+    # Asegurar columna image_url si la DB ya existía
+    cursor.execute("PRAGMA table_info(activities);")
+    columns = [row["name"] for row in cursor.fetchall()]
+    if "image_url" not in columns:
+        cursor.execute("ALTER TABLE activities ADD COLUMN image_url TEXT;")
 
     # Tabla de Gastos
     cursor.execute("""

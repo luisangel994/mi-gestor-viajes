@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 from datetime import datetime, timedelta
+from urllib.parse import quote_plus
 import sqlite3
 import json
 from pathlib import Path
@@ -161,7 +162,6 @@ def update_trip(trip_id: int, trip_data: TripUpdate):
     conn = get_db()
     cursor = conn.cursor()
     
-    # Comprobar si existe
     cursor.execute("SELECT * FROM trips WHERE id = ?", (trip_id,))
     existing = cursor.fetchone()
     if not existing:
@@ -208,22 +208,19 @@ def create_activity(act: ActivityCreate):
     conn = get_db()
     cursor = conn.cursor()
     
-    # Generar Google Maps URL si no está presente pero hay localización
     map_url = act.map_url or ""
     if act.location and not map_url:
-        map_url = f"https://www.google.com/maps/search/?api=1&query={act.location.replace(' ', '+')}"
+        map_url = f"https://www.google.com/maps/search/?api=1&query={quote_plus(act.location)}"
 
     cursor.execute(
-        """INSERT INTO activities (trip_id, day_id, time, end_time, title, category, location, map_url, cost, confirmation_code, notes, status, sort_order)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        """INSERT INTO activities (trip_id, day_id, time, end_time, title, category, location, map_url, image_url, cost, confirmation_code, notes, status, sort_order)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
         (act.trip_id, act.day_id, act.time or "", act.end_time or "", act.title,
-         act.category or "Actividad", act.location or "", map_url, act.cost or 0.0,
+         act.category or "Actividad", act.location or "", map_url, act.image_url or "", act.cost or 0.0,
          act.confirmation_code or "", act.notes or "", act.status or "Planificado", 0)
     )
     act_id = cursor.lastrowid
     
-    # Si la actividad tiene coste, ¿deseas añadirla opcionalmente a los gastos automáticamente?
-    # Para consistencia de presupuesto lo incluimos si es > 0
     if act.cost and act.cost > 0:
         cursor.execute(
             "INSERT INTO expenses (trip_id, title, category, amount, currency, date, paid, notes) VALUES (?, ?, ?, ?, 'EUR', '', 1, ?)",
@@ -243,9 +240,8 @@ def update_activity(act_id: int, act: ActivityUpdate):
     params = []
     data = act.model_dump(exclude_unset=True)
     
-    # Auto-generar mapa si cambia localización
     if "location" in data and data["location"] and ("map_url" not in data or not data["map_url"]):
-        data["map_url"] = f"https://www.google.com/maps/search/?api=1&query={data['location'].replace(' ', '+')}"
+        data["map_url"] = f"https://www.google.com/maps/search/?api=1&query={quote_plus(data['location'])}"
 
     for field, val in data.items():
         update_fields.append(f"{field} = ?")
