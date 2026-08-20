@@ -123,7 +123,6 @@ const DEFAULT_TRIPS = [
     }
 ];
 
-// Coordenadas conocidas para mapa interactivo
 const COORDS_MAP = {
     'Valencia': [39.4699, -0.3763],
     'Alto de León': [40.7022, -4.1378],
@@ -175,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function loadLocalData() {
-    const CURRENT_STORAGE_KEY = 'travel_planner_data_v3';
+    const CURRENT_STORAGE_KEY = 'travel_planner_data_v4';
     const data = localStorage.getItem(CURRENT_STORAGE_KEY);
     if (data) {
         try {
@@ -192,7 +191,7 @@ function loadLocalData() {
 }
 
 function saveLocalData() {
-    localStorage.setItem('travel_planner_data_v3', JSON.stringify(state.trips));
+    localStorage.setItem('travel_planner_data_v4', JSON.stringify(state.trips));
 }
 
 function formatDate(dateStr) {
@@ -353,26 +352,20 @@ function toggleMapType(type) {
         leafletWrapper.classList.remove('hidden');
         btnLeaflet.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-sky-600 text-white shadow-2xs";
         btnGmaps.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200";
-        if (leafletMap) {
-            setTimeout(() => leafletMap.invalidateSize(), 200);
-        }
+        
+        // Inicializar Leaflet ahora que el div es visible
+        initLeafletMap();
     }
 }
 
-function renderTripRouteMap() {
+function initLeafletMap() {
     if (!state.currentTrip) return;
 
-    const mapBox = document.getElementById('trip-map-box');
-    const gmapsIframe = document.getElementById('gmaps-iframe');
-    const googleMapPoints = [];
     const waypoints = [];
-
     if (state.currentTrip.days) {
         state.currentTrip.days.forEach(d => {
             d.activities.forEach(a => {
                 if (a.location) {
-                    googleMapPoints.push(a.location);
-
                     let coords = null;
                     for (const [key, c] of Object.entries(COORDS_MAP)) {
                         if (a.location.toLowerCase().includes(key.toLowerCase()) || a.title.toLowerCase().includes(key.toLowerCase())) {
@@ -380,7 +373,6 @@ function renderTripRouteMap() {
                             break;
                         }
                     }
-
                     if (coords) {
                         waypoints.push({
                             day: d.day_number,
@@ -390,6 +382,65 @@ function renderTripRouteMap() {
                             map_url: a.map_url || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(a.location)}`
                         });
                     }
+                }
+            });
+        });
+    }
+
+    if (waypoints.length === 0) return;
+
+    if (leafletMap) {
+        leafletMap.remove();
+        leafletMap = null;
+    }
+
+    leafletMap = L.map('route-map').setView(waypoints[0].coords, 8);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '&copy; OpenStreetMap'
+    }).addTo(leafletMap);
+
+    const latLngs = waypoints.map(w => w.coords);
+    const polyline = L.polyline(latLngs, {
+        color: '#0284c7',
+        weight: 4,
+        opacity: 0.85,
+        dashArray: '6, 6'
+    }).addTo(leafletMap);
+
+    waypoints.forEach(w => {
+        const marker = L.marker(w.coords).addTo(leafletMap);
+        marker.bindPopup(`
+            <div style="font-family:sans-serif; padding:4px;">
+                <span style="background:#0284c7; color:#fff; font-size:10px; font-weight:bold; padding:2px 6px; border-radius:4px;">Día ${w.day}</span>
+                <h4 style="margin:4px 0; font-size:13px; font-weight:bold; color:#0f172a;">${w.title}</h4>
+                <p style="margin:2px 0 8px 0; font-size:11px; color:#475569;">📍 ${w.location}</p>
+                <a href="${w.map_url}" target="_blank" style="display:inline-block; background:#10b981; color:#fff; font-size:11px; font-weight:bold; padding:4px 8px; border-radius:6px; text-decoration:none;">Navegar en Google Maps</a>
+            </div>
+        `);
+    });
+
+    setTimeout(() => {
+        try {
+            leafletMap.invalidateSize();
+            leafletMap.fitBounds(polyline.getBounds().pad(0.15));
+        } catch (e) {}
+    }, 150);
+}
+
+function renderTripRouteMap() {
+    if (!state.currentTrip) return;
+
+    const mapBox = document.getElementById('trip-map-box');
+    const gmapsIframe = document.getElementById('gmaps-iframe');
+    const googleMapPoints = [];
+
+    if (state.currentTrip.days) {
+        state.currentTrip.days.forEach(d => {
+            d.activities.forEach(a => {
+                if (a.location) {
+                    googleMapPoints.push(a.location);
                 }
             });
         });
@@ -414,45 +465,6 @@ function renderTripRouteMap() {
         }
     }
     document.getElementById('btn-open-full-google-maps').href = fullGmapsUrl;
-
-    // 2. Leaflet Fallback Interactive Map
-    if (waypoints.length > 0) {
-        if (leafletMap) {
-            leafletMap.remove();
-            leafletMap = null;
-        }
-
-        leafletMap = L.map('route-map').setView(waypoints[0].coords, 8);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18,
-            attribution: '&copy; OpenStreetMap'
-        }).addTo(leafletMap);
-
-        const latLngs = waypoints.map(w => w.coords);
-        const polyline = L.polyline(latLngs, {
-            color: '#0284c7',
-            weight: 4,
-            opacity: 0.85,
-            dashArray: '6, 6'
-        }).addTo(leafletMap);
-
-        waypoints.forEach(w => {
-            const marker = L.marker(w.coords).addTo(leafletMap);
-            marker.bindPopup(`
-                <div style="font-family:sans-serif; padding:4px;">
-                    <span style="background:#0284c7; color:#fff; font-size:10px; font-weight:bold; padding:2px 6px; border-radius:4px;">Día ${w.day}</span>
-                    <h4 style="margin:4px 0; font-size:13px; font-weight:bold; color:#0f172a;">${w.title}</h4>
-                    <p style="margin:2px 0 8px 0; font-size:11px; color:#475569;">📍 ${w.location}</p>
-                    <a href="${w.map_url}" target="_blank" style="display:inline-block; background:#10b981; color:#fff; font-size:11px; font-weight:bold; padding:4px 8px; border-radius:6px; text-decoration:none;">Navegar en Google Maps</a>
-                </div>
-            `);
-        });
-
-        try {
-            leafletMap.fitBounds(polyline.getBounds().pad(0.15));
-        } catch (e) {}
-    }
 }
 
 function switchTripTab(tabName) {
