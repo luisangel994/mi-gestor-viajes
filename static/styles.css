@@ -1,0 +1,78 @@
+/* Custom styles for TravelPlanner */
+
+/* Active tab styles */
+.trip-tab-btn.active {
+    background-color: #0284c7;
+    color: #ffffff;
+}
+
+.trip-filter-btn.active {
+    background-color: #e0f2fe;
+    color: #0369a1;
+    border-color: #bae6fd;
+}
+
+.cat-filter-btn.active {
+    background-color: #0f172a;
+    color: #ffffff;
+}
+
+/* Category Badge Colors */
+.badge-vuelo { background-color: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+.badge-hotel { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+.badge-transporte { background-color: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
+.badge-actividad { background-color: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+.badge-restaurante { background-color: #ffe4e6; color: #be123c; border: 1px solid #fecdd3; }
+.badge-nota { background-color: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+
+/* Status Colors */
+.status-planificado { background-color: #f1f5f9; color: #475569; }
+.status-reservado { background-color: #dbeafe; color: #1e40af; font-weight: 600; }
+.status-completado { background-color: #dcfce7; color: #166534; font-weight: 600; }
+
+/* Timeline vertical connector */
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    top: 2rem;
+    bottom: -1rem;
+    left: 1.125rem;
+    width: 2px;
+    background-color: #e2e8f0;
+    z-index: 0;
+}
+
+.timeline-item:last-child::before {
+    display: none;
+}
+
+/* Print Stylesheet Optimization */
+@media print {
+    header, footer, .print\:hidden, button, .modal, #modal-trip, #modal-activity, #modal-expense, #modal-checklist {
+        display: none !important;
+    }
+    body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+    }
+    main {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    #view-trip-detail {
+        display: block !important;
+    }
+    #tab-content-itinerary {
+        display: block !important;
+    }
+    .shadow-sm, .shadow-md, .shadow-2xl {
+        box-shadow: none !important;
+    }
+    .border {
+        border-color: #cbd5e1 !important;
+    }
+    .page-break {
+        page-break-after: always;
+    }
+}
